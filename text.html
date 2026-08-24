@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>禕羽 — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8e4dc;
+    --text2: #8a8580;
+    --text3: #5a5550;
+    --accent: #c8b89a;
+    --accent2: #d4c9b5;
+    --accent-dim: rgba(200,184,154,0.12);
+    --red: #c0392b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(200,184,154,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+  }
+  body:hover .cursor { opacity: 1; }
+  a:hover ~ .cursor, button:hover ~ .cursor { width: 14px; height: 14px; }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    backdrop-filter: blur(1px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text2);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(120px, 20vw, 260px);
+    font-weight: 300;
+    font-style: italic;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-grid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-content {
+    position: relative; z-index: 1;
+    max-width: 700px;
+  }
+  .hero-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--accent);
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text2);
+    line-height: 2;
+    max-width: 400px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-tags {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+  }
+  .hero-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    transition: all 0.3s;
+  }
+  .hero-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .hero-scroll {
+    position: absolute;
+    right: 3rem; bottom: 5rem;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+    z-index: 1;
+  }
+  .hero-scroll span {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text3);
+    writing-mode: vertical-rl;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.3); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  /* Section base */
+  section { padding: 7rem 3rem; }
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before {
+    content: attr(data-num);
+    font-size: 0.58rem;
+    color: var(--text3);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    margin-bottom: 4rem;
+  }
+
+  /* About */
+  #about { background: var(--bg2); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text2);
+    line-height: 2.2;
+  }
+  .about-text p + p { margin-top: 1.5rem; }
+  .about-highlight {
+    color: var(--accent2);
+  }
+  .skills-list {
+    display: flex; flex-direction: column; gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  .skill-item {
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .skill-name {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text2);
+    display: flex;
+    justify-content: space-between;
+  }
+  .skill-bar-bg {
+    height: 1px;
+    background: var(--border);
+  }
+  .skill-bar {
+    height: 1px;
+    background: var(--accent);
+    transform-origin: left;
+    animation: barGrow 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform: scaleX(0);
+  }
+  @keyframes barGrow { to { transform: scaleX(1); } }
+
+  /* Works — Category Cards */
+  #works { background: var(--bg); }
+  .cat-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5px; }
+  .cat-card {
+    position: relative; aspect-ratio: 16/10; overflow: hidden; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .cat-card:hover { transform: scale(0.985); }
+  .cat-bg { position: absolute; top:0;left:0;right:0;bottom:0; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .cat-card:hover .cat-bg { transform: scale(1.04); }
+
+  .cat-bg-photo  { 
+                  background-image: 
+                  linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)), 
+                  url('/Portfolio/img/DSC00725.jpg');
+                  background-size: cover; 
+                  background-position: center; 
+                  background-repeat: no-repeat;
+                  }
+
+  .cat-bg-graphic{background-image: linear-gradient(135deg, 
+                    rgba(13, 17, 23, 0.75),   /* 左上：深一點 */
+                    rgba(26, 13, 26, 0.6),    /* 中間 */
+                    rgba(10, 13, 18, 0.7)     /* 右下 */
+                  ),
+                  url('/Portfolio/img/DSC07852-2.jpg') ;
+                  background-size: cover;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                  }
+
+  .cat-bg-web    { background: linear-gradient(135deg,#0a1a0a,#0d2b1a,#081408); }
+  .cat-bg-uiux   { background: linear-gradient(135deg,#1a1a2e,#16213e,#0f2244); }
+
+  .cat-overlay { position:absolute;top:0;left:0;right:0;bottom:0; 
+                  background: linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.1) 50%,transparent 100%); }
+                  
+  .cat-deco { position:absolute;right:1.5rem;top:50%;transform:translateY(-60%);width:140px;height:140px;opacity:0.8;transition:opacity 0.4s,transform 0.5s; }
+  .cat-card:hover .cat-deco { opacity:1;transform:translateY(-55%) scale(1.05); }
+  .cat-num { position:absolute;top:1.25rem;left:2rem;font-size:0.58rem;letter-spacing:0.25em;color:rgba(255,255,255,0.2); }
+  .cat-body { position:relative;z-index:1; }
+  .cat-label { font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:0.3rem; }
+  .cat-title { font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;line-height:1;color:var(--text);margin-bottom:0.4rem; }
+  .cat-sub { font-size:0.62rem;letter-spacing:0.12em;color:var(--text2);margin-bottom:1rem; }
+  .cat-cta { font-size:0.65rem;letter-spacing:0.15em;color:var(--accent);opacity:0;transform:translateY(6px);transition:opacity 0.35s,transform 0.35s; }
+  .cat-card:hover .cat-cta { opacity:1;transform:translateY(0); }
+
+  /* Lightbox */
+  .lightbox { position:fixed;inset:0;z-index:500;background:rgba(6,6,6,0.97);display:none;flex-direction:column;overflow:hidden; }
+  .lightbox.open { display:flex; }
+  .lb-header { display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;border-bottom:1px solid var(--border);flex-shrink:0; }
+  .lb-title { font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--text); }
+  .lb-header-right { display:flex;align-items:center;gap:1rem; }
+  .lb-count { font-size:0.6rem;letter-spacing:0.2em;color:var(--text3); }
+  .lb-close { background:none;border:1px solid var(--border2);color:var(--text2);font-size:0.9rem;width:36px;height:36px;cursor:pointer;transition:border-color 0.3s,color 0.3s;display:flex;align-items:center;justify-content:center; }
+  .lb-close:hover { border-color:var(--accent);color:var(--accent); }
+
+  /* Vertical scroll gallery */
+  .lb-scroll { flex:1;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth; }
+  .lb-scroll::-webkit-scrollbar { width:3px; }
+  .lb-scroll::-webkit-scrollbar-track { background:transparent; }
+  .lb-scroll::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
+  .lb-img-item {
+    width:100%; position:relative;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .lb-img-item img {
+    width:100%; display:block;
+    object-fit:cover;
+    transition:transform 0.6s cubic-bezier(0.4,0,0.2,1), opacity 0.4s;
+    opacity:0.9;
+  }
+  .lb-img-item:hover img { transform:scale(1.015); opacity:1; }
+  .lb-img-meta {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:1.5rem 2.5rem;
+    background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 100%);
+    display:flex; align-items:flex-end; justify-content:space-between;
+    opacity:0; transition:opacity 0.35s;
+  }
+  .lb-img-item:hover .lb-img-meta { opacity:1; }
+  .lb-img-caption-text { font-size:0.65rem;letter-spacing:0.15em;color:var(--accent2); }
+  .lb-img-num { font-size:0.58rem;letter-spacing:0.2em;color:var(--text3); }
+
+  /* Project grid (web/uiux) 專案卡片樣式 */
+  .lb-proj-grid { flex:1;overflow-y:auto;padding:2rem 2.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.25rem;align-content:start; }
+  .lb-proj-card { border:1px solid var(--border);padding:1.75rem;transition:border-color 0.3s,background 0.3s;text-decoration: none; }
+  .lb-proj-card:hover { border-color:var(--accent);background:var(--accent-dim);text-decoration: none; }
+  .lb-proj-num { font-size:0.58rem;letter-spacing:0.2em;color:var(--text3);margin-bottom:1rem; }
+  .lb-proj-title { font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--text);margin-bottom:0.5rem; }
+  .lb-proj-desc { font-size:0.65rem;color:var(--text2);line-height:1.8;margin-bottom:1rem; }
+  .lb-proj-tags { display:flex;flex-wrap:wrap;gap:0.4rem; }
+  .lb-proj-tag { font-size:0.58rem;letter-spacing:0.12em;padding:0.2rem 0.6rem;border:1px solid var(--border2);color:var(--text3); }
+
+  /* Contact */
+  #contact { background: var(--bg2); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .contact-text {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 300;
+    color: var(--text2);
+    line-height: 2.2;
+    font-size: 0.95rem;
+  }
+  .contact-links {
+    display: flex; flex-direction: column; gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-decoration: none;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    group: true;
+  }
+  .contact-link:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .contact-link-icon {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    min-width: 60px;
+  }
+  .contact-link-label {
+    font-size: 0.75rem;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    flex: 1;
+  }
+  .contact-link-arrow {
+    font-size: 0.75rem;
+    color: var(--text3);
+    transition: transform 0.3s, color 0.3s;
+  }
+  .contact-link:hover .contact-link-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
+  /* Footer */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer span {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--text3);
+  }
+
+  /* Animations */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SVG decorative elements for cards */
+  .card-svg { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    text-decoration: none;
+
+   }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .cat-grid { grid-template-columns: 1fr; }
+    .lb-masonry { columns: 2; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .nav-links { gap: 1.5rem; }
+  }
+  @media (max-width: 600px) {
+    .hero-name { font-size: 3rem; }
+    .nav-links { display: none; }
+    .lb-masonry { columns: 1; }
+    .lb-prev { left: 0.5rem; } .lb-next { right: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="nav-logo">禕羽</a>
+  <ul class="nav-links">
+    <li><a href="#about">關於</a></li>
+    <li><a href="#works">作品</a></li>
+    <li><a href="#contact">聯絡</a></li>
+    <li><a href="#home" class="back-btn">首頁</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-bg-text">Yi Yu</div>
+  <div class="hero-content fade-up">
+    <div class="hero-label">設計師 &amp; 創作者</div>
+    <h1 class="hero-name">禕<em>羽</em></h1>
+    <p class="hero-desc">將故事轉化為畫面，<br>在資訊與設計之間找到平衡的美學。</p>
+    <div class="hero-tags">
+      <span class="hero-tag">網頁前端</span>
+      <span class="hero-tag">攝影</span>
+      <span class="hero-tag">平面設計</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="section-label" data-num="01">About</div>
+  <h2 class="section-title fade-up">關於<br><em style="font-style:italic; color:var(--accent)">我</em></h2>
+  <div class="about-grid">
+    <div class="about-text fade-up">
+      <p>我是<span class="about-highlight">禕羽</span>
+進入職涯生活中，嘗試了許多不同專業領域，一開始從婚紗業攝影開始了解新人對於攝影風格的需求，再到攝影的打光、修圖以及使用單眼、穩定器拍攝婚禮紀錄。
+<p>後續參與承辦活動大會會場主視覺設計及印刷，各式背板、旗幟、X行展架、攝影牆等等。
+熟悉PS及AI、capture one、PR軟體使用。</p>
+
+<p>在製作平面圖樣放置網頁上時，意識到許多網頁上的物件不只是圖像檔，進而修網頁設計，熟悉html、css、javascript，撰寫登入登出功能，以及串接後端資料，目前善於使用前端框架vue及element plus 。</p>
+
+<p>把工作視為生活的一部分，依然學習，回報更多人。</p>
+    </div>
+    <div class="fade-up" style="animation-delay: 0.2s">
+      <div class="skills-list">
+        <div class="skill-item">
+          <div class="skill-name"><span>前端開發</span><span>HTML / CSS / JS</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar" style="width:60%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name"><span>UI 設計</span><span>Figma / Prototyping</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar" style="width:65%; animation-delay: 0.2s"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name"><span>平面設計</span><span>Typography / Layout</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar" style="width:90%; animation-delay: 0.4s"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-name"><span>攝影</span><span>Portrait / Street</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar" style="width:90%; animation-delay: 0.6s"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Works -->
+<section id="works">
+  <div class="section-label" data-num="02">Works</div>
+  <h2 class="section-title fade-up">精選<br><em style="font-style:italic; color:var(--accent)">作品</em></h2>
+  <div class="cat-grid">
+
+    <!-- Photography -->
+    <div class="cat-card fade-up" data-category="photography" style="animation-delay:0s">
+      <div class="cat-bg cat-bg-photo"></div> <!-- 放照片的css -->
+      <div class="cat-overlay"></div>
+      <div class="cat-num">01</div>
+      <div class="cat-body">
+        <div class="cat-label">Photography</div>
+        <div class="cat-title">攝影作品</div>
+        <div class="cat-sub">街拍 · 人像 · 風景</div>
+        <div class="cat-cta">查看圖庫 →</div>
+      </div>
+      <svg class="cat-deco" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="70" stroke="rgba(200,184,154,0.12)" stroke-width="1"/>
+        <circle cx="100" cy="100" r="45" stroke="rgba(200,184,154,0.18)" stroke-width="1"/>
+        <circle cx="100" cy="100" r="18" fill="rgba(200,184,154,0.08)" stroke="rgba(200,184,154,0.35)" stroke-width="1"/>
+        <line x1="100" y1="30" x2="100" y2="10" stroke="rgba(200,184,154,0.2)" stroke-width="1"/>
+        <line x1="100" y1="170" x2="100" y2="190" stroke="rgba(200,184,154,0.2)" stroke-width="1"/>
+        <line x1="30" y1="100" x2="10" y2="100" stroke="rgba(200,184,154,0.2)" stroke-width="1"/>
+        <line x1="170" y1="100" x2="190" y2="100" stroke="rgba(200,184,154,0.2)" stroke-width="1"/>
+        <rect x="75" y="75" width="50" height="50" rx="2" stroke="rgba(200,184,154,0.25)" stroke-width="0.5" stroke-dasharray="3,3"/>
+      </svg>
+    </div>
+
+    <!-- Graphic Design -->
+    <div class="cat-card fade-up" data-category="graphic" style="animation-delay:0.08s">
+      <div class="cat-bg cat-bg-graphic"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-num">02</div>
+      <div class="cat-body">
+        <div class="cat-label">Graphic Design</div>
+        <div class="cat-title">平面設計</div>
+        <div class="cat-sub">品牌 · 排版 · 視覺識別</div>
+        <div class="cat-cta">查看專案 →</div>
+      </div>
+      <svg class="cat-deco" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="30" width="70" height="70" stroke="rgba(200,184,154,0.15)" stroke-width="1"/>
+        <rect x="50" y="50" width="70" height="70" fill="rgba(200,184,154,0.05)" stroke="rgba(200,184,154,0.25)" stroke-width="1"/>
+        <rect x="70" y="70" width="70" height="70" stroke="rgba(200,184,154,0.12)" stroke-width="1"/>
+        <text x="165" y="75" text-anchor="end" fill="rgba(200,184,154,0.35)" font-family="Georgia,serif" font-size="28" font-style="italic">Aa</text>
+      </svg>
+    </div>
+
+    <!-- Web Design -->
+    <div class="cat-card fade-up" data-category="web" style="animation-delay:0.16s">
+      <div class="cat-bg cat-bg-web"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-num">03</div>
+      <div class="cat-body">
+        <div class="cat-label">Web Design</div>
+        <div class="cat-title">網頁設計</div>
+        <div class="cat-sub">UI · 前端開發 · 互動體驗</div>
+        <div class="cat-cta">查看專案 →</div>
+      </div>
+      <svg class="cat-deco" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="30" width="160" height="120" rx="4" stroke="rgba(200,184,154,0.12)" stroke-width="1"/>
+        <rect x="20" y="30" width="160" height="20" fill="rgba(200,184,154,0.05)" stroke="none"/>
+        <circle cx="34" cy="40" r="3.5" fill="rgba(255,100,80,0.4)"/>
+        <circle cx="46" cy="40" r="3.5" fill="rgba(255,200,80,0.4)"/>
+        <circle cx="58" cy="40" r="3.5" fill="rgba(80,200,80,0.4)"/>
+        <line x1="32" y1="70" x2="120" y2="70" stroke="rgba(200,184,154,0.2)" stroke-width="1"/>
+        <line x1="32" y1="84" x2="168" y2="84" stroke="rgba(200,184,154,0.12)" stroke-width="1"/>
+        <line x1="32" y1="98" x2="148" y2="98" stroke="rgba(200,184,154,0.1)" stroke-width="1"/>
+        <rect x="32" y="114" width="50" height="18" rx="2" fill="rgba(200,184,154,0.1)" stroke="rgba(200,184,154,0.25)" stroke-width="0.5"/>
+      </svg>
+    </div>
+
+    <!-- UI/UX -->
+    <div class="cat-card fade-up" data-category="uiux" style="animation-delay:0.24s">
+      <div class="cat-bg cat-bg-uiux"></div>
+      <div class="cat-overlay"></div>
+      <div class="cat-num">04</div>
+      <div class="cat-body">
+        <div class="cat-label">UI / UX</div>
+        <div class="cat-title">UI/UX 設計</div>
+        <div class="cat-sub">流程規劃 · Figma · Prototyping</div>
+        <div class="cat-cta">查看專案 →</div>
+      </div>
+      <svg class="cat-deco" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="15" y="85" width="50" height="30" rx="3" stroke="rgba(200,184,154,0.25)" stroke-width="1"/>
+        <text x="40" y="105" text-anchor="middle" fill="rgba(200,184,154,0.5)" font-family="monospace" font-size="7">Start</text>
+        <line x1="65" y1="100" x2="85" y2="100" stroke="rgba(200,184,154,0.3)" stroke-width="1"/>
+        <rect x="85" y="85" width="50" height="30" rx="3" fill="rgba(200,184,154,0.07)" stroke="rgba(200,184,154,0.4)" stroke-width="1"/>
+        <text x="110" y="105" text-anchor="middle" fill="rgba(200,184,154,0.7)" font-family="monospace" font-size="7">Dashboard</text>
+        <line x1="135" y1="100" x2="152" y2="80" stroke="rgba(200,184,154,0.2)" stroke-width="1"/>
+        <line x1="135" y1="100" x2="152" y2="120" stroke="rgba(200,184,154,0.2)" stroke-width="1"/>
+        <rect x="152" y="65" width="38" height="24" rx="3" stroke="rgba(200,184,154,0.18)" stroke-width="1"/>
+        <rect x="152" y="108" width="38" height="24" rx="3" stroke="rgba(200,184,154,0.18)" stroke-width="1"/>
+        <text x="171" y="81" text-anchor="middle" fill="rgba(200,184,154,0.4)" font-family="monospace" font-size="6">Profile</text>
+        <text x="171" y="124" text-anchor="middle" fill="rgba(200,184,154,0.4)" font-family="monospace" font-size="6">Works</text>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-header">
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-header-right">
+      <span class="lb-count" id="lb-count"></span>
+      <button class="lb-close" id="lb-close">✕</button>
+    </div>
+  </div>
+  <div class="lb-scroll" id="lb-scroll"></div>
+</div>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="section-label" data-num="03">Contact</div>
+  <h2 class="section-title fade-up">聯絡<br><em style="font-style:italic; color:var(--accent)">我</em></h2>
+  <div class="contact-inner">
+    <div class="contact-text fade-up">
+      <p>如果你有想法想聊，或是有合作機會想探討，歡迎隨時與我聯繫。</p>
+      <br>
+      <p style="color: var(--text3); font-size: 0.85rem;">一封信、一個想法，<br>都可能是一個新故事的開始。</p>
+    </div>
+    <div class="contact-links fade-up" style="animation-delay:0.15s">
+      <a href="mailto:yiyu@example.com" class="contact-link">
+        <span class="contact-link-icon">Email</span>
+        <span class="contact-link-label">cy84958@gmail.com</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-link-icon">GitHub</span>
+        <span class="contact-link-label">陸續累積中</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://www.flickr.com/photos/194414817@N07/" class="contact-link" target="_blank">
+        <span class="contact-link-icon">Flicker</span>
+        <span class="contact-link-label">攝影照片館</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://www.behance.net/yiyu59173" class="contact-link" target="_blank">
+        <span class="contact-link-icon">Behance</span>
+        <span class="contact-link-label">設計作品集</span><!--連結:https://www.behance.net/yiyu59173-->
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 奕羽 — All rights reserved</span>
+  <span>Designed &amp; Built with intention</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, .cat-card, .hero-tag, .lb-thumb-wrap').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform='translate(-50%,-50%) scale(1.8)'; ring.style.width='48px'; ring.style.height='48px'; ring.style.borderColor='rgba(200,184,154,0.6)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='rgba(200,184,154,0.4)'; });
+  });
+
+  // Intersection Observer
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // ── Lightbox data ──
+  const GALLERY_DATA = {
+    photography: {
+      title: '攝影作品',
+      type: 'gallery',
+      items: [
+        { src: './img/DSC01785.jpg', caption: '' },
+        { src: './img/y (50 - 69).jpg', caption: '' },
+        { src: './img/DSC00754.jpg', caption: '' },
+        { src: './img/202306030177.jpg', caption: '' },
+        { src: './img/DSC01137-ym.jpg', caption: '人物肖像 #09' },
+        { src: './img/_Y8A7688-2.JPG', caption: ' #07' },
+        { src: './img/DSC01722.jpg', caption: ' #08' },
+        { src: './img/02-01.jpg', caption: ' #05' },
+        { src: './img/ym (127 - 146).jpg', caption: ' #06' },
+      ]
+    },
+    graphic: {
+      title: '平面設計',
+      type: 'projects',
+      items: [
+        { title: '此岸-偶動畫美術設計', 
+        desc: '以深色系為基調，結合 Cormorant Garamond 字體，打造高質感設計師作品集。', 
+        tags: ['HTML', 'CSS', 'JavaScript'],
+        link: '/Portfolio/ceremony.html' },
+
+        { title: '曠野之心-耳環品牌視覺設計', 
+        desc: '商品瀏覽、購物車與結帳流程完整實作，RWD 響應式設計。', 
+        tags: ['React', 'Tailwind', 'API'],
+        link: '/Portfolio/wildest.html' },
+
+        { title: '大手牽小手-兒童舞台劇展演', 
+        desc: '大手牽小手，希望起步走', 
+        tags: ['Vue.js', 'GSAP', 'Figma'],
+        link: '/Portfolio/HandInHandEvent.html' },
+
+        { title: '光復中學招生季活動視覺設計', 
+        desc: '以圖片為核心的展示頁，瀑布流圖庫搭配全螢幕燈箱效果。', 
+        tags: ['HTML', 'CSS Grid', 'JS'],
+        link: '/Portfolio/kfshSchool.html' },
+
+        { title: '新竹縣工業會視覺整合設計', 
+        desc: '數據視覺化儀表板，包含圖表、統計卡片與篩選功能。', 
+        tags: ['React', 'D3.js', 'CSS'],
+        link: '/Portfolio/hciaBrand.html' },
+
+        { title: '估月日光', desc: '表單設計與驗證邏輯，配合活動主視覺進行頁面氛圍設定。', tags: ['HTML', 'JavaScript', 'CSS'] },
+      ]
+    },
+    web: {
+      title: '網頁設計',
+      type: 'projects',
+      items: [
+        { title: '個人作品集網站', desc: '以深色系為基調，結合 Cormorant Garamond 字體，打造高質感設計師作品集。', tags: ['HTML', 'CSS', 'JavaScript'] },
+        { title: '電商平台前端', desc: '商品瀏覽、購物車與結帳流程完整實作，RWD 響應式設計。', tags: ['React', 'Tailwind', 'API'] },
+        { title: '品牌官網設計', desc: '從視覺識別延伸至網頁呈現，包含品牌色彩系統與動態效果。', tags: ['Vue.js', 'GSAP', 'Figma'] },
+        { title: '攝影師作品集', desc: '以圖片為核心的展示頁，瀑布流圖庫搭配全螢幕燈箱效果。', tags: ['HTML', 'CSS Grid', 'JS'] },
+        { title: 'Dashboard 介面', desc: '數據視覺化儀表板，包含圖表、統計卡片與篩選功能。', tags: ['React', 'D3.js', 'CSS'] },
+        { title: '活動報名頁面', desc: '表單設計與驗證邏輯，配合活動主視覺進行頁面氛圍設定。', tags: ['HTML', 'JavaScript', 'CSS'] },
+      ]
+    },
+    uiux: {
+      title: 'UI / UX 設計',
+      type: 'projects',
+      items: [
+        { title: 'UI Flow 規劃', desc: '以 Figma 建立完整使用者流程圖，涵蓋主要路徑與邊緣情境。', tags: ['Figma', 'User Flow', 'Wireframe'] },
+        { title: '行動 App 設計', desc: '從 UX 研究到 UI 設計，建立統一的設計語言與元件庫。', tags: ['Figma', 'Prototype', 'UX Research'] },
+        { title: '電商 App 重設計', desc: '分析使用者痛點後，重新規劃資訊架構與互動流程。', tags: ['Figma', 'Usability Test', 'IA'] },
+        { title: 'SaaS 後台介面', desc: 'B2B 軟體後台設計，強調資訊密度與操作效率。', tags: ['Figma', 'Design System', 'UI Kit'] },
+      ]
+    }
+  };
+
+  const lightbox = document.getElementById('lightbox');
+  const lbTitle = document.getElementById('lb-title');
+  const lbCount = document.getElementById('lb-count');
+  const lbScroll = document.getElementById('lb-scroll');
+
+  function openLightbox(category) {
+    const data = GALLERY_DATA[category];
+    lbTitle.textContent = data.title;
+    lbScroll.innerHTML = '';
+
+    // Remove any leftover proj grid
+    const old = lightbox.querySelector('.lb-proj-grid');
+    if (old) old.remove();
+
+    if (data.type === 'gallery') {
+      lbCount.textContent = data.items.length + ' 張';
+      lbScroll.style.display = 'block';
+
+      data.items.forEach((item, i) => {
+        const el = document.createElement('div');
+        el.className = 'lb-img-item';
+        el.innerHTML = `
+          <img src="${item.src}" alt="${item.caption}" loading="lazy">
+          <div class="lb-img-meta">
+            <span class="lb-img-caption-text">${item.caption}</span>
+            <span class="lb-img-num">${String(i+1).padStart(2,'0')} / ${String(data.items.length).padStart(2,'0')}</span>
+          </div>`;
+        lbScroll.appendChild(el);
+      });
+    } else {
+      lbCount.textContent = data.items.length + ' 個專案';
+      lbScroll.style.display = 'none';
+      const grid = document.createElement('div');
+      grid.className = 'lb-proj-grid';
+
+      data.items.forEach((proj, i) => {
+
+        const card = document.createElement('a');          // 改成 a 標籤
+        card.href = proj.link || '#';                      // 讀取 link
+        card.className = 'lb-proj-card';
+        // 如果想要新分頁開啟，可以加上這行：
+        card.target = '_blank';
+
+        // const card = document.createElement('div');
+        // card.className = 'lb-proj-card';
+
+        card.innerHTML = `
+          <div class="lb-proj-num">${String(i+1).padStart(2,'0')}</div>
+          <div class="lb-proj-title">${proj.title}</div>
+          <div class="lb-proj-desc">${proj.desc}</div>
+          <div class="lb-proj-tags">${proj.tags.map(t=>`<span class="lb-proj-tag">${t}</span>`).join('')}</div>`;
+        grid.appendChild(card);
+      });
+      lightbox.appendChild(grid);
+    }
+
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lbScroll.scrollTop = 0;
+  }
+
+  document.getElementById('lb-close').addEventListener('click', () => {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    const old = lightbox.querySelector('.lb-proj-grid');
+    if (old) old.remove();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      const old = lightbox.querySelector('.lb-proj-grid');
+      if (old) old.remove();
+    }
+  });
+
+  document.querySelectorAll('.cat-card').forEach(card => {
+    card.addEventListener('click', () => openLightbox(card.dataset.category));
+  });
+</script>
+</body>
+</html>

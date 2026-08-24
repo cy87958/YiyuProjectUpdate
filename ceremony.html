@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>此岸 Ceremony</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0c0a09;
+    --char:#1a1512;
+    --bone:#efe6d8;
+    --paper:#d9cdb8;
+    --lily-red:#8c1f1a;
+    --lily-red-deep:#5c1210;
+    --ember:#c98a3e;
+    --gold:#b8894a;
+    --line: rgba(239,230,216,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Noto Sans TC', sans-serif;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 40px;}
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    backdrop-filter: blur(1px);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text2);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    height:62vh;
+    min-height:420px;
+    max-height:640px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, #3a1810 0%, transparent 60%),
+      linear-gradient(180deg, #1c130d 0%, #120c09 55%, #0c0a09 100%);
+  }
+
+  .hero svg,
+  .hero picture,
+  .hero img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(12,10,9,0) 60%, rgba(12,10,9,0.95) 100%);
+    pointer-events:none;
+  }
+
+  /* ---------- TITLE BLOCK ---------- */
+  .title-block{
+    padding:96px 40px 70px;
+    text-align:center;
+    background:var(--ink);
+  }
+  .logo-mark{
+    font-family:'Noto Serif TC', serif;
+    font-weight:900;
+    font-size:clamp(56px,9vw,92px);
+    letter-spacing:0.08em;
+    line-height:1;
+    color:var(--bone);
+    position:relative;
+    display:inline-block;
+  }
+  .logo-mark::before{
+    content:"";
+    position:absolute; left:-6%; right:-6%; top:38%; height:52%;
+    background:radial-gradient(ellipse at 50% 50%, rgba(140,31,26,0.35), transparent 70%);
+    filter:blur(4px);
+    z-index:-1;
+  }
+  .logo-sub{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:20px;
+    letter-spacing:0.5em;
+    color:var(--gold);
+    margin-top:6px;
+    text-transform:lowercase;
+  }
+  .badges{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:44px;
+    flex-wrap:wrap;
+    margin:46px 0 34px;
+  }
+  .badge-gpin{
+    display:flex; align-items:center; gap:14px;
+    font-family:'Noto Serif TC', serif;
+  }
+  .badge-gpin .diamond{
+    width:44px; height:44px;
+    border:1.5px solid var(--gold);
+    transform:rotate(45deg);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .badge-gpin .diamond span{
+    transform:rotate(-45deg);
+    font-size:11px; font-weight:700; color:var(--gold);
+  }
+  .badge-gpin .gpin-text{
+    text-align:left; font-size:13px; letter-spacing:0.18em;
+    line-height:1.5; color:var(--paper); font-weight:600;
+  }
+  .badge-vgw{
+    font-family:'Noto Serif TC', serif;
+    font-weight:900;
+    font-size:30px;
+    letter-spacing:0.05em;
+    color:var(--ember);
+    font-style:italic;
+  }
+  .award-line{
+    font-size:14px;
+    letter-spacing:0.04em;
+    color:var(--paper);
+    max-width:520px;
+    margin:0 auto;
+  }
+  .award-line b{color:var(--ember); font-weight:600;}
+
+  /* ---------- SYNOPSIS ---------- */
+  .synopsis{
+    padding:20px 40px 90px;
+    background:var(--ink);
+  }
+  .synopsis .cols{
+    max-width:900px; margin:0 auto;
+    display:grid; gap:40px;
+  }
+  .synopsis p{
+    font-size:14.5px;
+    letter-spacing:0.02em;
+    color:var(--paper);
+  }
+  .synopsis p.en{
+    font-family:'Cormorant Garamond', serif;
+    font-size:18px;
+    font-style:italic;
+    color:var(--bone);
+    line-height:1.85;
+  }
+
+  /* ---------- CONTENT SECTIONS ---------- */
+  section.article{
+    padding:64px 40px;
+    border-top:1px solid var(--line);
+  }
+  section.article .wrap{max-width:820px; padding:0;}
+  h2.section-title{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    font-size:24px;
+    letter-spacing:0.03em;
+    margin-bottom:24px;
+    position:relative;
+    padding-left:22px;
+  }
+  h2.section-title::before{
+    content:"";
+    position:absolute; left:0; top:6px; bottom:6px;
+    width:4px;
+    background:var(--lily-red);
+  }
+  section.article p{
+    font-size:14.5px;
+    color:var(--paper);
+    letter-spacing:0.01em;
+  }
+
+  /* ---------- TEAM ---------- */
+  .team{
+    padding:70px 40px;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  .team-grid{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:24px;
+    max-width:980px;
+    margin-left:auto; margin-right:auto;
+  }
+  .team-card{
+    background:var(--char);
+    border:1px solid var(--line);
+    padding:22px 12px 20px;
+  }
+  .avatar{width:100%; aspect-ratio:1/1.15; margin-bottom:14px;}
+  .team-card .name{
+    font-family:'Noto Serif TC', serif;
+    font-size:13px; font-weight:600; color:var(--bone);
+  }
+  .team-card .role{
+    font-size:11px; color:var(--gold); margin-top:6px; letter-spacing:0.03em;
+  }
+
+  /* ---------- CHARACTER ---------- */
+  .character{
+    padding:70px 40px;
+    border-top:1px solid var(--line);
+  }
+  .character-grid{
+    display:grid;
+    grid-template-columns:1fr 1.7fr 1fr;
+    gap:32px;
+    align-items:center;
+    max-width:1000px;
+    margin:40px auto 0;
+  }
+  .character-grid .figures, .character-grid .expressions{width:100%;}
+  .character-grid .desc{
+    font-size:14.5px; color:var(--paper);
+  }
+
+  /* ---------- STORYBOARD ---------- */
+  .storyboard{
+    padding:70px 0;
+    border-top:1px solid var(--line);
+  }
+  .storyboard .wrap{max-width:1180px;}
+  .card-carousel{
+  position:relative;
+  height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.cc-track{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+.cc-item{
+  position:absolute;
+  top:50%; left:50%;
+  width:320px; height:200px;
+  transform:translate(-50%,-50%);
+  border-radius:4px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.5s ease, opacity 0.5s ease;
+  background:var(--char);
+}
+.cc-item img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* 上一張/下一張箭頭，樣式沿用原本 .carousel-arrow */
+.cc-arrow{
+  width:40px; height:40px; border-radius:50%;
+  border:none;
+  background:var(--ember);
+  color:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; cursor:pointer;
+  position:relative; z-index:20;
+  flex-shrink:0;
+}
+.cc-prev{ margin-right:-20px; }
+.cc-next{ margin-left:-20px; }
+
+@media(max-width:520px){
+  .cc-item{ width:220px; height:150px; }
+  .card-carousel{ height:180px; }
+}
+
+  /* ---------- 劇照 ---------- */
+
+/* ---------- 縮圖九宮格 ---------- */
+.demo-image-preview{
+  width:100px; height:200px;
+  overflow:hidden;
+  cursor:pointer;
+}
+.demo-image-preview .thumb{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+}
+.stage-grid{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4px;
+}
+.stage-grid .demo-image-preview{
+  width:100%;
+  aspect-ratio:16/10;
+  overflow:hidden;
+  cursor:pointer;
+}
+.stage-grid .demo-image-preview .thumb{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform 0.4s ease;
+}
+.stage-grid .demo-image-preview:hover .thumb{
+  transform:scale(1.06);
+}
+
+/* ---------- 燈箱外殼 ---------- */
+.img-lb{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  align-items:center; justify-content:center;
+  z-index:999;
+  user-select:none;
+}
+.img-lb.open{ display:flex; }
+
+/* ---------- 進度顯示 (show-progress) ---------- */
+.img-lb-progress{
+  position:absolute; top:20px; left:50%;
+  transform:translateX(-50%);
+  color:#fff; font-size:14px;
+  background:rgba(255,255,255,0.12);
+  padding:4px 14px;
+  border-radius:999px;
+  letter-spacing:0.05em;
+}
+
+/* ---------- 關閉按鈕 ---------- */
+.img-lb-close{
+  position:absolute; top:16px; right:24px;
+  width:40px; height:40px;
+  border:none; border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  color:#fff; font-size:22px;
+  cursor:pointer;
+}
+
+/* ---------- 上一張/下一張 ---------- */
+.img-lb-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:48px; height:48px;
+  border:none; border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  color:#fff; font-size:26px;
+  cursor:pointer;
+  z-index:2;
+}
+.img-lb-prev{ left:24px; }
+.img-lb-next{ right:24px; }
+
+/* ---------- 圖片顯示區 (可拖曳範圍) ---------- */
+.img-lb-stage{
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.img-lb-img{
+  max-width:88vw;
+  max-height:80vh;
+  object-fit:contain;
+  cursor:grab;
+  transform-origin:center center;
+  transition:transform 0.15s ease-out;
+}
+.img-lb-img.dragging{
+  cursor:grabbing;
+  transition:none;
+}
+
+/* ---------- 縮放工具列 (zoom-rate / max-scale / min-scale) ---------- */
+.img-lb-tools{
+  position:absolute; bottom:24px; left:50%;
+  transform:translateX(-50%);
+  display:flex; gap:8px;
+}
+.img-lb-tools button{
+  width:40px; height:40px;
+  border:none; border-radius:6px;
+  background:rgba(255,255,255,0.1);
+  color:#fff; font-size:15px;
+  cursor:pointer;
+}
+.img-lb-tools button:hover,
+.img-lb-arrow:hover,
+.img-lb-close:hover{
+  background:rgba(255,255,255,0.22);
+}
+
+  /* ---------- AWARDS ---------- */
+  .awards{
+    position:relative;
+    padding:80px 40px 120px;
+    background:var(--lily-red-deep);
+    overflow:hidden;
+  }
+  .awards::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 8% 30%, rgba(0,0,0,0.35), transparent 45%),
+      radial-gradient(circle at 92% 75%, rgba(0,0,0,0.3), transparent 45%);
+  }
+  .awards h2.section-title{color:var(--bone);}
+  .awards h2.section-title::before{background:var(--ember);}
+  .awards-list{
+    position:relative; z-index:1;
+    max-width:820px; margin:0 auto;
+    list-style:none;
+    display:grid; gap:10px;
+  }
+  .awards-list li{
+    font-size:14.5px;
+    color:var(--bone);
+    padding-left:16px;
+    position:relative;
+  }
+  .awards-list li::before{
+    content:"—";
+    position:absolute; left:0; color:var(--ember);
+  }
+  .lily-field{
+    position:absolute; left:0; right:0; bottom:-6px; height:180px;
+    z-index:0; opacity:0.9;
+  }
+
+  footer{
+    background:var(--ink);
+    text-align:center;
+    padding:30px;
+    font-size:12px;
+    letter-spacing:0.1em;
+    color:#6b625a;
+  }
+
+  @media(max-width:900px){
+    .team-grid{grid-template-columns:repeat(3,1fr);}
+    .character-grid{grid-template-columns:1fr; gap:24px; text-align:center;}
+    .carousel-track{grid-template-columns:repeat(2,1fr); height:200px;}
+    .stage-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:520px){
+    .wrap{padding:0 20px;}
+    .title-block{padding:70px 20px 50px;}
+    section.article{padding:48px 20px;}
+    .team{padding:50px 20px;}
+    .character{padding:50px 20px;}
+    .stage{padding:50px 20px 70px;}
+    .team-grid{grid-template-columns:repeat(2,1fr);}
+    .badges{gap:24px;}
+    .carousel-track{grid-template-columns:repeat(2,1fr); height:160px;}
+  }
+</style>
+</head>
+<body>
+<!--header-->
+<nav>
+  <a href="#" class="nav-logo">禕羽</a>
+  <ul class="nav-links">
+    <li><a href="/Portfolio/text.html" class="back-btn">回作品列表</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ILLUSTRATION ================= -->
+<div class="hero">
+    <picture>
+      <img
+        src="./img/ci-an/劇照/1-1_final.jpg"
+        alt="此岸 主視覺插畫"
+        loading="eager"
+        fetchpriority="high"
+        width="1200" height="700">
+    </picture>
+
+</div>
+
+<!-- ================= TITLE / LOGO ================= -->
+<section class="title-block">
+
+  <img
+    src="./img/ci-an/logo/ceromony-logo-w.png"
+    loading="lazy"
+    alt="此岸 CEREMONY LOGO"
+    style="width:200px; height:auto; display:block; margin:0 auto;">
+
+  <div class="logo-sub">ceremony</div>
+
+  <div class="badges">
+    <div class="badge-gpin">
+
+      <div class="gpin-text">
+        <img
+          src="./img/ci-an/獲獎/golden_pin_design_award_logo-72e33d5ce06668284caf06dff47cd1c5.svg"
+          loading="lazy"
+          alt="金點新秀設計獎 LOGO"
+          style="width:150px; height:auto; display:block;">
+      </div>
+
+    </div>
+    <div class="badge-vgw">
+        <img
+          src="./img/ci-an/獲獎/logo.4e94ca43.png"
+          loading="lazy"
+          alt="金點新秀設計獎 LOGO"
+          style="width:150px; height:auto; display:block;">
+    </div>
+  </div>
+
+  <p class="award-line">
+    <b>金獎</b> / 放視大賞 實驗與混合媒體動畫組<br>
+    <b>入圍</b> / 金點新秀設計
+  </p>
+</section>
+
+<!-- ================= SYNOPSIS ================= -->
+<section class="synopsis">
+  <div class="cols">
+    <p>
+      由於科技時代的進步，傳統儀式已化繁為簡，許多儀式當中的精神早已流於形式。客套不走心的祝福，讓喪禮文化成為一種表面形式，只憑大量的金紙、紙紮屋、蓮花元寶，真的能讓往生者走好嗎？在人生的盡頭，最想聽到的到底是什麼呢？我們相信，唯有真心的思念與祝福才能讓往生者好、還活著的人安好。一朵朵鮮紅的彼岸花牽引著阿公走的前方，化為純白的花朵卻又帶來思念與美好的祝福。此岸的生靈揮別彼岸的亡靈，此刻才終於得到永恆的安息。
+    </p>
+    <p class="en">
+      The communication between the living and the dead is achieved through ceremonies. Although when the people sang laments and eulogies from the top of their lungs, the dead still could not receive the joss paper they were given. Even though the offerings are abundant for these ceremonies, they lack the truthful blessings from their families. At the end of life, what is it that you truthfully want?
+    </p>
+  </div>
+</section>
+
+<!-- ================= ARTICLE 1 ================= -->
+<section class="article">
+  <div class="wrap">
+    <h2 class="section-title">一切始於對於死亡世界的想像</h2>
+    <p>
+      對於死後世界的想像 古今以來,世界各地都有一套對死後世界的想像,例如:埃及人相信死後會由阿努比斯 神對死者的靈魂進行審判、西藏人認為將死者的屍體交由禿鷹「天葬」,死後會到達極樂 世界、印度人認為輪迴再世會讓死者重回親人的身邊。 中國人則深信,死後死者的魂魄會經由差使牽引至鬼門關,有家屬燒的金紙、元寶, 可讓死者在黃泉路上打點過路費,誦讀經文則可幫死者消除業障、減輕各地獄層級的審判 和服刑,在投胎時則會行經忘川河,需喝下孟婆湯、走上奈何橋便可獲得來世。
+    </p>
+  </div>
+</section>
+
+<!-- ================= ARTICLE 2 ================= -->
+<section class="article">
+  <div class="wrap">
+    <h2 class="section-title">傳統儀式流於形式還是心意？</h2>
+    <p>
+      傳統儀式當中，對於死者往往有許多的儀式：誦經、作七、摺蓮花燒金紙等，目的是為了讓往生者安寧，在死後的世界可以忘記生前的苦痛重新投胎他人，並讓家屬透過這些儀式去悼念往生者，並且好好地和死者道別。但由於科技時代的進步，傳統儀式已化繁為簡，許多儀式當中的精神早已流於形式，客套不走心的祝福，讓喪禮文化成為一種表面形式，家屬的哭喊、眼淚都是空泛麻木的，大量的金錢、紙紮屋、蓮花元寶，真的能讓往生者走好嗎？
+    </p>
+  </div>
+</section>
+
+<!-- ================= ARTICLE 3 ================= -->
+<section class="article">
+  <div class="wrap">
+    <h2 class="section-title">傳統儀式祭品式微</h2>
+    <p>
+      現代社會由於步調快速、時間壓縮，在舉行喪禮儀式時顧忌到時間、環保等層面，許多的儀式和祭品都漸漸從簡，從前訂做的紙紮屋、折蓮花元寶都漸漸消失，或許在未來的科技社會裡逐漸被淘汰，金紙等傳統媒材都不再出現。
+    </p>
+  </div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section class="team">
+  <h2 class="section-title" style="display:inline-block;">團隊 Team（卡片）</h2>
+  <div class="team-grid">
+    <div class="team-card">
+      <img
+        src="./img/ci-an/成員/團隊人員紙偶-3.png"
+        class="avatar"
+        loading="lazy"
+        style="width:150px; height:auto;">
+
+      <div class="name">蔡采絹 TSAI-CHUAN HUANG</div>
+      <div class="role">導演／企劃／音效</div>
+    </div>
+    <div class="team-card">
+      <img
+        src="./img/ci-an/成員/團隊人員紙偶-2.png"
+        class="avatar"
+        loading="lazy"
+        width="100" height="100%">
+      <div class="name">張祐婷 YU-TING CHANG</div>
+      <div class="role">導演／分鏡／美術</div>
+    </div>
+    <div class="team-card">
+      <img
+        src="./img/ci-an/成員/團隊人員紙偶-3.png"
+        class="avatar"
+        loading="lazy"
+        width="100" height="100%">
+      <div class="name">曾昕潔 CHI-HSUAN TSENG</div>
+      <div class="role">美術／道具／後製</div>
+    </div>
+    <div class="team-card">
+      <img
+        src="./img/ci-an/成員/團隊人員紙偶-4.png"
+        class="avatar"
+        loading="lazy"
+        width="100" height="100%">
+      <div class="name">陳怡妤 YI-YU CHEN</div>
+      <div class="role">美術／攝影／後製</div>
+    </div>
+    <div class="team-card">
+      <img
+        src="./img/ci-an/成員/團隊人員紙偶-5.png"
+        class="avatar"
+        loading="lazy"
+        width="100" height="100%">
+      <div class="name">聶楚鳳 CHU-FONG NIE</div>
+      <div class="role">美術／道具／後製</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CHARACTER ================= -->
+<section class="character">
+  <h2 class="section-title">人物介紹 CHARACTER</h2>
+  <div class="character-grid">
+    <svg class="figures" viewBox="0 0 200 300">
+      <rect width="200" height="300" fill="#161210"/>
+      <g fill="#efe6d8">
+        <circle cx="60" cy="60" r="24"/>
+        <rect x="35" y="86" width="50" height="70" rx="10"/>
+        <rect x="42" y="150" width="16" height="60"/>
+        <rect x="66" y="150" width="16" height="60"/>
+      </g>
+      <g fill="#d9cdb8">
+        <circle cx="150" cy="60" r="22"/>
+        <rect x="128" y="84" width="44" height="64" rx="9"/>
+        <rect x="134" y="144" width="14" height="55"/>
+        <rect x="154" y="144" width="14" height="55"/>
+      </g>
+    </svg>
+    <p class="desc">
+      阿公身著白色台灣老人常見的白色衛衣，下半身著短褲，腳上穿著藍白拖鞋。理著一頭短短的平頭，神情嚴肅、個性頑固，是個久疏於和家人有所互動和溝通的老人，唯一的溫情只顯露在小孫女萱萱身上。
+    </p>
+    <svg class="expressions" viewBox="0 0 160 300">
+      <rect width="160" height="300" fill="#161210"/>
+      <g fill="none" stroke="#b8894a" stroke-width="2">
+        <circle cx="40" cy="40" r="26"/>
+        <circle cx="120" cy="40" r="26"/>
+        <circle cx="40" cy="120" r="26"/>
+        <circle cx="120" cy="120" r="26"/>
+        <circle cx="40" cy="200" r="26"/>
+        <circle cx="120" cy="200" r="26"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- ================= 分鏡腳本 ================= -->
+<section class="storyboard">
+  <div class="wrap">
+    <h2 class="section-title">分鏡腳本 Storyboard（輪播圖）</h2>
+    <div class="card-carousel" id="sbCarousel">
+      <button class="cc-arrow cc-prev" id="sbPrev" aria-label="上一張">‹</button>
+      <div class="cc-track" id="sbTrack">
+        <div class="cc-item" data-index="0"><img src="./img/ci-an/分鏡/1.jpg" alt="分鏡 1" loading="lazy"></div>
+        <div class="cc-item" data-index="1"><img src="./img/ci-an/分鏡/2.jpg" alt="分鏡 2" loading="lazy"></div>
+        <div class="cc-item" data-index="2"><img src="./img/ci-an/分鏡/3.jpg" alt="分鏡 3" loading="lazy"></div>
+        <div class="cc-item" data-index="3"><img src="./img/ci-an/分鏡/4.jpg" alt="分鏡 4" loading="lazy"></div>
+        <div class="cc-item" data-index="4"><img src="./img/ci-an/分鏡/5.jpg" alt="分鏡 5" loading="lazy"></div>
+        <div class="cc-item" data-index="5"><img src="./img/ci-an/分鏡/6.jpg" alt="分鏡 6" loading="lazy"></div>
+      </div>
+      <button class="cc-arrow cc-next" id="sbNext" aria-label="下一張">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 劇照燈箱 ================= -->
+<section class="stage">
+  <h2 class="section-title">劇照 Stage photo（燈箱）</h2>
+  <div class="stage-grid">
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/8-2_final.jpg" alt="劇照 1" loading="lazy" data-preview-index="0">
+    </div>
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/1-1_final.jpg" alt="劇照 2" loading="lazy" data-preview-index="1">
+    </div>
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/1-3_final.jpg" alt="劇照 3" loading="lazy" data-preview-index="2">
+    </div>
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/5-1_3_final.jpg" alt="劇照 4" loading="lazy" data-preview-index="3">
+    </div>
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/5-10_final.jpg" alt="劇照 5" loading="lazy" data-preview-index="4">
+    </div>
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/5-11_final.jpg" alt="劇照 6" loading="lazy" data-preview-index="5">
+    </div>
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/6-5_1_final.jpg" alt="劇照 7" loading="lazy" data-preview-index="6">
+    </div>
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/8-1_final.jpg" alt="劇照 8" loading="lazy" data-preview-index="7">
+    </div>
+    <div class="demo-image-preview">
+      <img class="thumb" src="./img/ci-an/劇照/9-1_final.jpg" alt="劇照 9" loading="lazy" data-preview-index="8">
+    </div>
+  </div>
+</section>
+
+
+<!-- 燈箱本體，放在 body 結尾前即可，一個頁面只需要一份 -->
+<div class="img-lb" id="imgLb">
+  <div class="img-lb-progress" id="imgLbProgress">1 / 7</div>
+  <button class="img-lb-close" id="imgLbClose" aria-label="關閉">×</button>
+
+  <button class="img-lb-arrow img-lb-prev" id="imgLbPrev" aria-label="上一張">‹</button>
+  <div class="img-lb-stage" id="imgLbStage">
+    <img class="img-lb-img" id="imgLbImg" src="" alt="">
+  </div>
+  <button class="img-lb-arrow img-lb-next" id="imgLbNext" aria-label="下一張">›</button>
+
+  <div class="img-lb-tools">
+    <button id="imgLbZoomOut" aria-label="縮小">－</button>
+    <button id="imgLbZoomReset" aria-label="重設">1:1</button>
+    <button id="imgLbZoomIn" aria-label="放大">＋</button>
+  </div>
+</div>
+
+<!-- ================= AWARDS ================= -->
+<section class="awards">
+  <h2 class="section-title">獲獎紀錄</h2>
+  <ul class="awards-list">
+    <li>2020 放視大賞－實驗與混合媒材動畫組－金獎</li>
+    <li>2020 德國紅點 Red Dot Winner</li>
+    <li>2020 哥倫比亞實驗短片國際影展－動畫單元得主 Ganador Categoria Animacion</li>
+    <li>2020 高雄電影節國際短片競賽－兒童議題入圍</li>
+    <li>2020 青春有影大學杯動畫組－金獎</li>
+    <li>2020 新一代設計展－金點新秀設計獎－入圍</li>
+    <li>2020 義大利青年創意設計大賞－新加坡設計業總會 特別獎</li>
+    <li>2020 台灣國際學生創意設計大賽－數位動畫類 入圍</li>
+    <li>2020 第16屆技專校院電腦動畫競賽－佳作</li>
+  </ul>
+
+  <!-- <svg class="lily-field" viewBox="0 0 1200 180" preserveAspectRatio="none">
+    <g fill="#0c0a09" opacity="0.9">
+      <path d="M40 180 C40 120 20 100 0 90 C30 95 50 70 55 40 C65 70 90 90 120 90 C95 100 80 130 80 180 Z"/>
+      <path d="M220 180 C220 110 195 90 170 80 C205 85 230 55 235 20 C248 55 280 80 315 80 C285 95 265 130 265 180 Z"/>
+      <path d="M480 180 C480 125 460 105 440 95 C470 100 490 75 495 45 C505 75 528 95 555 95 C532 105 518 135 518 180 Z"/>
+      <path d="M760 180 C760 115 735 95 710 85 C745 90 770 60 775 25 C788 60 820 85 855 85 C825 100 805 135 805 180 Z"/>
+      <path d="M1010 180 C1010 125 990 105 970 95 C1000 100 1020 75 1025 45 C1035 75 1058 95 1085 95 C1062 105 1048 135 1048 180 Z"/>
+      <path d="M1180 180 C1180 130 1160 112 1140 102 C1168 106 1186 82 1190 55 C1200 82 1220 102 1245 102 C1224 112 1212 138 1212 180 Z"/>
+    </g> -->
+
+    <img class="lily-field" src="./img/ci-an/分鏡/000.png" alt="彼岸花田" loading="lazy" style="width:100%; height:auto; display:block;">
+  </svg>
+</section>
+
+<footer>此岸 CEREMONY — DESIGN PORTFOLIO RECREATION</footer>
+
+</body>
+</html>
+<script>
+
+  <!--分鏡腳本輪播圖-->
+  (function(){
+  const items = Array.from(document.querySelectorAll('#sbTrack .cc-item'));
+  const total = items.length;
+  const interval = 4000;      // 對應 :interval="4000"
+  const spacing = 190;        // 側邊卡片的水平間距
+  let current = 0;
+  let timer = null;
+
+  function render(){
+    items.forEach((el, i) => {
+      // 計算跟目前置中卡片的最短距離（環狀）
+      let distance = i - current;
+      if (distance > total / 2) distance -= total;
+      if (distance < -total / 2) distance += total;
+
+      const abs = Math.abs(distance);
+      let scale, opacity, z;
+
+      if (abs === 0){ scale = 1; opacity = 1; z = 10; }
+      else if (abs === 1){ scale = 0.82; opacity = 0.55; z = 5; }
+      else { scale = 0.65; opacity = 0; z = 1; }   // 太遠的卡片直接隱藏
+
+      el.style.transform = `translate(-50%,-50%) translateX(${distance * spacing}px) scale(${scale})`;
+      el.style.opacity = opacity;
+      el.style.zIndex = z;
+      el.style.pointerEvents = abs === 0 ? 'auto' : (opacity > 0 ? 'auto' : 'none');
+    });
+  }
+
+  function goTo(index){
+    current = (index + total) % total;
+    render();
+  }
+
+  function next(){ goTo(current + 1); }
+  function prev(){ goTo(current - 1); }
+
+  function startAutoplay(){
+    timer = setInterval(next, interval);
+  }
+  function stopAutoplay(){
+    clearInterval(timer);
+  }
+
+  // 點擊側邊卡片 → 該卡變成置中焦點（對應 el-carousel 卡片式的預設行為）
+  items.forEach((el, i) => {
+    el.addEventListener('click', () => {
+      if (i !== current) goTo(i);
+    });
+  });
+
+  document.getElementById('sbPrev').addEventListener('click', () => { prev(); });
+  document.getElementById('sbNext').addEventListener('click', () => { next(); });
+
+  // 滑入時暫停自動輪播，滑出繼續（跟 el-carousel 預設行為一致）
+  const carousel = document.getElementById('sbCarousel');
+  carousel.addEventListener('mouseenter', stopAutoplay);
+  carousel.addEventListener('mouseleave', startAutoplay);
+
+  render();
+  startAutoplay();
+})();
+
+
+  <!--劇照燈箱-->
+  (function(){
+  // ===== 對應 el-image 的 props =====
+  const srcList = [
+    './img/ci-an/劇照/1-1_final.jpg',
+    './img/ci-an/劇照/1-3_final.jpg',
+    './img/ci-an/劇照/5-10_final.jpg',
+    './img/ci-an/劇照/5-11_final.jpg',
+    './img/ci-an/劇照/5-1_final.jpg',
+    './img/ci-an/劇照/6-1_final.jpg',
+  ];
+  const zoomRate = 1.2;
+  const maxScale = 7;
+  const minScale = 0.2;
+
+  const lb = document.getElementById('imgLb');
+  const lbImg = document.getElementById('imgLbImg');
+  const lbProgress = document.getElementById('imgLbProgress');
+  const stage = document.getElementById('imgLbStage');
+
+  let current = 0;
+  let scale = 1;
+  let posX = 0, posY = 0;
+  let dragging = false, startX = 0, startY = 0;
+
+  function applyTransform(){
+    lbImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  }
+
+  function resetTransform(){
+    scale = 1; posX = 0; posY = 0;
+    applyTransform();
+  }
+
+  function show(index){
+    current = (index + srcList.length) % srcList.length;
+    lbImg.src = srcList[current];
+    lbProgress.textContent = `${current + 1} / ${srcList.length}`;
+    resetTransform();
+  }
+
+  function open(index){
+    show(index);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close(){
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function zoom(factor){
+    scale = Math.min(maxScale, Math.max(minScale, scale * factor));
+    applyTransform();
+  }
+
+  // 每張縮圖：讀取 data-preview-index 當作 initial-index
+  document.querySelectorAll('.demo-image-preview .thumb').forEach((thumb, i) => {
+    thumb.addEventListener('click', () => {
+      const initial = thumb.dataset.previewIndex
+        ? parseInt(thumb.dataset.previewIndex, 10)
+        : i;
+      open(initial);
+    });
+  });
+
+  document.getElementById('imgLbClose').addEventListener('click', close);
+  document.getElementById('imgLbPrev').addEventListener('click', () => show(current - 1));
+  document.getElementById('imgLbNext').addEventListener('click', () => show(current + 1));
+  document.getElementById('imgLbZoomIn').addEventListener('click', () => zoom(zoomRate));
+  document.getElementById('imgLbZoomOut').addEventListener('click', () => zoom(1 / zoomRate));
+  document.getElementById('imgLbZoomReset').addEventListener('click', resetTransform);
+
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+  // 滾輪縮放
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoom(e.deltaY < 0 ? zoomRate : 1 / zoomRate);
+  }, { passive: false });
+
+  // 拖曳平移（放大後才有意義）
+  lbImg.addEventListener('mousedown', e => {
+    dragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+    lbImg.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    applyTransform();
+  });
+  window.addEventListener('mouseup', () => {
+    dragging = false;
+    lbImg.classList.remove('dragging');
+  });
+
+  // 鍵盤操作
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+    if (e.key === '+') zoom(zoomRate);
+    if (e.key === '-') zoom(1 / zoomRate);
+  });
+})();
+
+
+</script>
