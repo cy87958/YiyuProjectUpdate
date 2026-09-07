@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小手．大手 希望齊步走｜親子活動企劃</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0b;
+    --bg-soft:#121212;
+    --ink:#f2f0ec;
+    --ink-dim:#b9b6b0;
+    --ink-faint:#7c7975;
+    --rule:#2a2a2a;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Noto Sans TC","Noto Serif TC",serif;
+    line-height:1.9;
+    letter-spacing:0.02em;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+  }
+
+  .page{
+    width:100%;
+    max-width:1040px;
+  }
+
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  h2,h3{
+    font-family:"Noto Serif TC", serif;
+    font-weight:600;
+    letter-spacing:0.06em;
+  }
+
+  p{ color:var(--ink-dim); }
+
+  /* ---------- HERO SLIDESHOW ---------- */
+  .hero-slideshow{
+    position:relative;
+    width:100%;
+    height:520px;
+    overflow:hidden;
+    background:var(--bg-soft);
+  }
+  .hero-slideshow .slide{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity 1.2s ease-in-out;
+  }
+  .hero-slideshow .slide.active{
+    opacity:1;
+  }
+  .hero-dots{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:20px;
+    display:flex;
+    justify-content:center;
+    gap:9px;
+    z-index:2;
+  }
+  .hero-dots .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.35);
+    cursor:pointer;
+    transition:background 0.3s ease, transform 0.3s ease;
+  }
+  .hero-dots .dot.active{
+    background:#fff;
+    transform:scale(1.2);
+  }
+
+  section{ padding:64px 0; }
+  section + section{ border-top:1px solid var(--rule); }
+
+  /* ---------- INTRO / LOGO ---------- */
+  .intro{
+    display:flex;
+    align-items:center;
+    gap:60px;
+    flex-wrap:wrap;
+  }
+  .intro-logo{
+    width:320px;
+    height:auto;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--bg-soft);
+    border:1px dashed var(--rule);
+    border-radius:8px;
+    text-align:center;
+    padding:14px;
+  }
+  .intro-logo .placeholder-label{
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    letter-spacing:0.1em;
+  }
+  .intro-text .lead{
+    font-size:16.5px;
+    color:#fff;
+    font-weight:500;
+    margin-bottom:10px;
+  }
+  .intro-text p{
+    font-size:15px;
+    max-width:560px;
+  }
+
+  h3.section-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:19px;
+    margin-bottom:22px;
+    letter-spacing:0.12em;
+    font-weight:700;
+    color:#fff;
+  }
+  h3.section-title::before{
+    content:"";
+    display:inline-block;
+    flex-shrink:0;
+    width:4px;
+    height:22px;
+    background:#3a7a4a;
+  }
+
+  .body-text p{
+    font-size:15px;
+    margin-bottom:8px;
+    max-width:760px;
+  }
+  .body-text p.gap-top{ margin-top:20px; }
+  .body-text p:last-child{ margin-bottom:0; }
+
+  /* ---------- 活動影片 ---------- */
+  .media-frame{
+    width:100%;
+    max-width:1040px;
+    height:420px;
+    object-fit:cover;
+    display:block;
+    border-radius:2px;
+    margin-bottom:24px;
+    background:#000;
+  }
+
+  /* ---------- 活動平面攝影（縮圖 + 燈箱） ---------- */
+  .stage-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+  }
+  .demo-image-preview{
+    position:relative;
+    width:100%;
+    height:180px;
+    overflow:hidden;
+    cursor:zoom-in;
+    background:var(--bg-soft);
+  }
+  .demo-image-preview .thumb{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.4s ease, filter 0.4s ease;
+  }
+  .demo-image-preview:hover .thumb{
+    transform:scale(1.06);
+    filter:brightness(0.85);
+  }
+
+  /* ---------- 燈箱 Lightbox ---------- */
+  .img-lb{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+  }
+  .img-lb.open{ display:flex; }
+  .img-lb-stage{
+    width:88vw;
+    height:82vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .img-lb-img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    user-select:none;
+    cursor:grab;
+    transition:transform 0.08s linear;
+  }
+  .img-lb-img.dragging{ cursor:grabbing; }
+  .img-lb-close{
+    position:absolute;
+    top:22px;
+    right:28px;
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:32px;
+    line-height:1;
+    cursor:pointer;
+    z-index:2;
+  }
+  .img-lb-progress{
+    position:absolute;
+    top:26px;
+    left:28px;
+    color:var(--ink-dim);
+    font-family:"JetBrains Mono", monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+  }
+  .img-lb-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:44px;
+    line-height:1;
+    cursor:pointer;
+    padding:10px 16px;
+    opacity:0.7;
+    transition:opacity 0.2s ease;
+  }
+  .img-lb-arrow:hover{ opacity:1; }
+  .img-lb-prev{ left:8px; }
+  .img-lb-next{ right:8px; }
+  .img-lb-tools{
+    position:absolute;
+    bottom:26px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:10px;
+  }
+  .img-lb-tools button{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid var(--rule);
+    background:var(--bg-soft);
+    color:#fff;
+    font-size:14px;
+    cursor:pointer;
+    transition:background 0.2s ease;
+  }
+  .img-lb-tools button:hover{ background:#1c1c1c; }
+
+  /* ---------- 行銷宣傳 list ---------- */
+  .channel-list{
+    margin:14px 0 20px;
+    padding-left:0;
+    list-style:none;
+  }
+  .channel-list li{
+    font-size:15px;
+    color:var(--ink-dim);
+    margin-bottom:4px;
+  }
+  .channel-list li .chan-name{
+    display:inline-block;
+    min-width:170px;
+    color:#fff;
+    font-family:"JetBrains Mono", monospace;
+    font-size:13px;
+    letter-spacing:0.04em;
+  }
+
+  /* ---------- 設計物 grid ---------- */
+  .asset-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto auto auto;
+    gap:18px 24px;
+    margin-top:30px;
+    max-width:820px;
+  }
+  .asset-item{ display:flex; flex-direction:column; gap:10px; }
+  .asset-item img{
+    width:100%;
+    object-fit:cover;
+    display:block;
+    border-radius:2px;
+  }
+  .asset-item .cap{
+    font-size:13px;
+    color:var(--ink-dim);
+    text-align:center;
+    letter-spacing:0.08em;
+  }
+  .asset-poster{ grid-column:1; grid-row:1 / span 2; }
+  .asset-poster img{ height:440px; }
+  .asset-calendar{ grid-column:2; grid-row:1; }
+  .asset-calendar img{ height:220px; }
+  .asset-backdrop{ grid-column:2; grid-row:2; }
+  .asset-backdrop img{ height:150px; }
+  .asset-dm{ grid-column:1; grid-row:3; }
+  .asset-dm img{ height:220px; }
+  .asset-social{ grid-column:2; grid-row:3; }
+  .asset-social img{ height:220px; }
+
+  @media (max-width:760px){
+    .wrap{ padding:0 22px; }
+    .hero-slideshow{ height:260px; }
+    .intro{ gap:28px; }
+    .stage-grid{ grid-template-columns:repeat(2,1fr); }
+    .demo-image-preview{ height:130px; }
+    .img-lb-arrow{ font-size:32px; padding:8px 10px; }
+    .asset-grid{ grid-template-columns:1fr 1fr; }
+    .asset-poster img{ height:260px; }
+    .asset-calendar img,.asset-dm img,.asset-social img{ height:150px; }
+    .asset-backdrop img{ height:100px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===================== HERO SLIDESHOW ===================== -->
+  <div class="hero-slideshow" id="heroSlideshow">
+    <img class="slide active" src="/img/handToHand/photo/y (50 - 69).jpg" alt="活動現場舞台夜景照">
+    <img class="slide" src="/img/handToHand/photo/y (36 - 69).jpg" alt="親子觀眾參與活動照片">
+    <img class="slide" src="/img/handToHand/photo/y (10 - 69).jpg" alt="舞台演出現場照片">
+    <img class="slide" src="/img/handToHand/photo/05.jpg"   alt="市集人潮照片">
+    <div class="hero-dots" id="heroDots"></div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ===================== 活動介紹 / LOGO ===================== -->
+    <section>
+      <div class="intro">
+        <div class="intro-logo">
+          <img src="/img/handToHand/logo/LOGO-BigHand-color-01.svg"
+              width="320"
+              height="auto"
+              alt="活動 LOGO 設計">
+        </div>
+        <div class="intro-text">
+          <div class="lead">大手牽小手希望齊步走活動</div>
+          <p>
+            新竹縣政府與希望協會合作舉辦之親子活動，期望透過寓教於樂的形式，為竹北地區家庭提供更多親子共學與交流的機會。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 活動影片 ===================== -->
+    <section>
+      <h3 class="section-title">活動影片</h3>
+      <video class="media-frame" src="/img/handToHand/video/劇場表演-愛道歉的小狐狸.mp4" controls playsinline></video>
+      <div class="body-text">
+        <p>
+          邀請兒童戲劇教育工作者——蘋果劇團演出寓言舞台劇《愛說謊的小狐狸》，透過故事劇情傳遞誠實與成長的價值，讓孩子在觀賞表演的過程中，自然地接觸品格教育，也促進親子間的互動與討論。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 活動平面攝影 ===================== -->
+    <section>
+      <h3 class="section-title">活動平面攝影</h3>
+      <div class="stage-grid">
+        <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/y (70 - 6).jpg"  loading="lazy" data-preview-index="0">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/y (5 - 69).jpg" loading="lazy" data-preview-index="1">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/09.png"  loading="lazy" data-preview-index="2">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/2024-03-01 151025.png"  loading="lazy" data-preview-index="3">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/y (75 - 6).jpg" loading="lazy" data-preview-index="4">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/05.jpg" alt="演出互動照片" loading="lazy" data-preview-index="5">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/10.png" loading="lazy" data-preview-index="6">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/y (10 - 69).jpg" loading="lazy" data-preview-index="6">
+        </div>
+            <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/11.png" loading="lazy" data-preview-index="6">
+        </div>
+            <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/y (42 - 69).jpg" loading="lazy" data-preview-index="6">
+        </div>
+            <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/y (43 - 69).jpg" loading="lazy" data-preview-index="6">
+        </div>
+            <div class="demo-image-preview">
+          <img class="thumb" src="/img/handToHand/photo/y (51 - 69).jpg" loading="lazy" data-preview-index="6">
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ===================== 行銷宣傳 ===================== -->
+    <section>
+      <h3 class="section-title">行銷宣傳</h3>
+      <div class="body-text">
+        <p>
+          在活動宣傳策略上，我們針對竹北地方媽媽常使用的資訊管道進行觀察與整理。
+        </p>
+        <p class="gap-top">主要宣傳管道包含：</p>
+      </div>
+      <ul class="channel-list">
+        <li><span class="chan-name">Facebook</span>在地親子社團分享</li>
+        <li><span class="chan-name">劇團既有粉絲</span>社群曝光</li>
+        <li><span class="chan-name">市集攤商</span>社群公告</li>
+        <li><span class="chan-name">Instagram</span>短影音內容</li>
+        <li><span class="chan-name">META</span>廣告投放</li>
+      </ul>
+      <div class="body-text">
+        <p>透過多元社群平台的交叉曝光，提升活動在在地家庭族群中的能見度。</p>
+      </div>
+    </section>
+
+    <!-- ===================== 市集活動規劃 ===================== -->
+    <section>
+      <h3 class="section-title">市集活動規劃</h3>
+      <div class="body-text">
+        <p>
+          為了延長民眾停留時間並營造更完整的活動氛圍，活動現場規劃結合陽光市集，安排於活動前及表演中場時段進行。
+        </p>
+        <p class="gap-top">
+          市集的加入讓親子能在觀賞表演之外，也能逛攤、休息與互動，使舞台周邊維持穩定的人流聚集。
+        </p>
+        <p>
+          同時搭配 雜技藝人不定時發放氣球小禮物，增加現場互動感與活動趣味性。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 舞台與燈光規劃 ===================== -->
+    <section>
+      <h3 class="section-title">舞台與燈光規劃</h3>
+      <div class="body-text">
+        <p>
+          舞台與燈光設計與 千景燈光進行協調，依據活動流程與舞台表演需求，提前討論：01.舞台線配置 02.燈光設備位置 03.觀眾安全距離。
+        </p>
+        <p class="gap-top">
+          同時也預先準備 雨天備案與設備安全配置，確保活動在不同天候條件下仍能順利進行。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 活動宣傳與設計物 ===================== -->
+    <section>
+      <h3 class="section-title">活動宣傳與設計物</h3>
+      <div class="asset-grid">
+        <div class="asset-item asset-poster">
+          <img src="/img/handToHand/design/1 (1).png" alt="活動海報立牌照片">
+          <div class="cap">活動海報</div>
+        </div>
+        <div class="asset-item asset-calendar">
+          <img src="/img/handToHand/design/1 (4).png" alt="活動年曆設計物照片">
+          <div class="cap">活動年曆</div>
+        </div>
+        <div class="asset-item asset-backdrop">
+          <img src="/img/handToHand/photo/y (50 - 69).jpg" alt="活動背板夜景照片">
+          <div class="cap">活動背板</div>
+        </div>
+        <div class="asset-item asset-dm">
+          <img src="/img/handToHand/design/1 (2).png" alt="活動 DM 傳單設計照片">
+          <div class="cap">DM</div>
+        </div>
+        <div class="asset-item asset-social">
+          <img src="/img/handToHand/design/4.jpg" alt="社群活動倒數貼文手機截圖">
+          <div class="cap">社群 活動倒數 貼文</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+<!-- ===================== 劇照燈箱 Lightbox ===================== -->
+<div class="img-lb" id="imgLb">
+  <div class="img-lb-progress" id="imgLbProgress">1 / 7</div>
+  <button class="img-lb-close" id="imgLbClose" aria-label="關閉">×</button>
+
+  <button class="img-lb-arrow img-lb-prev" id="imgLbPrev" aria-label="上一張">‹</button>
+  <div class="img-lb-stage" id="imgLbStage">
+    <img class="img-lb-img" id="imgLbImg" src="" alt="">
+  </div>
+  <button class="img-lb-arrow img-lb-next" id="imgLbNext" aria-label="下一張">›</button>
+
+  <div class="img-lb-tools">
+    <button id="imgLbZoomOut" aria-label="縮小">－</button>
+    <button id="imgLbZoomReset" aria-label="重設">1:1</button>
+    <button id="imgLbZoomIn" aria-label="放大">＋</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slideshow = document.getElementById('heroSlideshow');
+  var slides = slideshow.querySelectorAll('.slide');
+  var dotsWrap = document.getElementById('heroDots');
+  var current = 0;
+  var interval = 4000;
+  var timer;
+
+  slides.forEach(function(_, i){
+    var dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', function(){
+      goTo(i);
+      restart();
+    });
+    dotsWrap.appendChild(dot);
+  });
+  var dots = dotsWrap.querySelectorAll('.dot');
+
+  function goTo(index){
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function next(){
+    goTo((current + 1) % slides.length);
+  }
+
+  function restart(){
+    clearInterval(timer);
+    timer = setInterval(next, interval);
+  }
+
+  restart();
+})();
+</script>
+
+<script>
+(function(){
+  // 依縮圖 data-preview-index 順序，自動組出燈箱要顯示的原圖清單
+  var thumbs = Array.prototype.slice.call(document.querySelectorAll('.demo-image-preview .thumb'));
+  var srcList = thumbs
+    .slice()
+    .sort(function(a, b){
+      return parseInt(a.dataset.previewIndex, 10) - parseInt(b.dataset.previewIndex, 10);
+    })
+    .map(function(t){ return t.getAttribute('src'); });
+
+  var zoomRate = 1.2;
+  var maxScale = 7;
+  var minScale = 0.2;
+
+  var lb = document.getElementById('imgLb');
+  var lbImg = document.getElementById('imgLbImg');
+  var lbProgress = document.getElementById('imgLbProgress');
+  var stage = document.getElementById('imgLbStage');
+
+  var current = 0;
+  var scale = 1;
+  var posX = 0, posY = 0;
+  var dragging = false, startX = 0, startY = 0;
+
+  function applyTransform(){
+    lbImg.style.transform = 'translate(' + posX + 'px, ' + posY + 'px) scale(' + scale + ')';
+  }
+
+  function resetTransform(){
+    scale = 1; posX = 0; posY = 0;
+    applyTransform();
+  }
+
+  function show(index){
+    current = (index + srcList.length) % srcList.length;
+    lbImg.src = srcList[current];
+    lbProgress.textContent = (current + 1) + ' / ' + srcList.length;
+    resetTransform();
+  }
+
+  function open(index){
+    show(index);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close(){
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function zoom(factor){
+    scale = Math.min(maxScale, Math.max(minScale, scale * factor));
+    applyTransform();
+  }
+
+  thumbs.forEach(function(thumb, i){
+    thumb.addEventListener('click', function(){
+      var initial = thumb.dataset.previewIndex ? parseInt(thumb.dataset.previewIndex, 10) : i;
+      open(initial);
+    });
+  });
+
+  document.getElementById('imgLbClose').addEventListener('click', close);
+  document.getElementById('imgLbPrev').addEventListener('click', function(){ show(current - 1); });
+  document.getElementById('imgLbNext').addEventListener('click', function(){ show(current + 1); });
+  document.getElementById('imgLbZoomIn').addEventListener('click', function(){ zoom(zoomRate); });
+  document.getElementById('imgLbZoomOut').addEventListener('click', function(){ zoom(1 / zoomRate); });
+  document.getElementById('imgLbZoomReset').addEventListener('click', resetTransform);
+
+  lb.addEventListener('click', function(e){ if (e.target === lb) close(); });
+
+  // 滾輪縮放
+  stage.addEventListener('wheel', function(e){
+    e.preventDefault();
+    zoom(e.deltaY < 0 ? zoomRate : 1 / zoomRate);
+  }, { passive: false });
+
+  // 拖曳平移（放大後才有意義）
+  lbImg.addEventListener('mousedown', function(e){
+    dragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+    lbImg.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', function(e){
+    if (!dragging) return;
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    applyTransform();
+  });
+  window.addEventListener('mouseup', function(){
+    dragging = false;
+    lbImg.classList.remove('dragging');
+  });
+
+  // 鍵盤操作
+  document.addEventListener('keydown', function(e){
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+    if (e.key === '+') zoom(zoomRate);
+    if (e.key === '-') zoom(1 / zoomRate);
+  });
+})();
+</script>
+
+</body>
+</html>

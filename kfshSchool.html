@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光復中學招生季｜社群暨官網優化企劃</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0b;
+    --bg-soft:#131313;
+    --ink:#f2f0ec;
+    --ink-dim:#b9b6b0;
+    --ink-faint:#7c7975;
+    --rule:#2a2a2a;
+    --accent:#f2a33c;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Noto Sans TC","Noto Serif TC",serif;
+    line-height:1.9;
+    letter-spacing:0.02em;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+  }
+
+  .page{ width:100%; max-width:1040px; }
+
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  h1,h2,h3{
+    font-family:"Noto Serif TC", serif;
+    font-weight:600;
+    letter-spacing:0.06em;
+  }
+
+  p{ color:var(--ink-dim); }
+
+  .mono{
+    font-family:"JetBrains Mono", monospace;
+    letter-spacing:0.08em;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero-img{
+    width:100%;
+    height:420px;
+    object-fit:cover;
+    display:block;
+  }
+
+  section{ padding:64px 0; }
+  section + section{ border-top:1px solid var(--rule); }
+
+  /* ---------- TAG ---------- */
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--accent);
+    border:1px solid rgba(242,163,60,0.4);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:16px;
+  }
+  .tag::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+
+  /* ---------- INTRO ---------- */
+  .project-title{
+    font-size:26px;
+    color:#fff;
+    margin-bottom:10px;
+  }
+  .project-sub{
+    font-size:14px;
+    color:var(--ink-faint);
+    margin-bottom:38px;
+  }
+  .body-text p{
+    font-size:15px;
+    margin-bottom:18px;
+    max-width:740px;
+  }
+  .body-text p:last-child{ margin-bottom:0; }
+  .body-text strong{ color:#fff; font-weight:500; }
+
+  h3.section-title{
+    font-size:19px;
+    margin-bottom:22px;
+    letter-spacing:0.1em;
+  }
+  h4.sub-title{
+    font-size:15.5px;
+    color:#fff;
+    font-weight:500;
+    margin:30px 0 12px;
+    letter-spacing:0.06em;
+  }
+  h4.sub-title:first-of-type{ margin-top:0; }
+
+  /* ---------- METRIC ---------- */
+  .metric-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin:20px 0 10px;
+  }
+  .metric{
+    border:1px solid var(--rule);
+    border-radius:6px;
+    padding:12px 18px;
+    min-width:150px;
+  }
+  .metric .num{
+    font-family:"JetBrains Mono", monospace;
+    font-size:20px;
+    color:var(--accent);
+    font-weight:600;
+  }
+  .metric .lab{
+    font-size:12px;
+    color:var(--ink-faint);
+    margin-top:4px;
+  }
+
+  /* ---------- VIDEO ---------- */
+  .media-frame{
+    width:100%;
+    max-width:700px;
+    height:400px;
+    object-fit:cover;
+    display:block;
+    border-radius:2px;
+    margin-bottom:18px;
+  }
+  .caption{
+    font-size:13.5px;
+    color:var(--ink-faint);
+    max-width:700px;
+  }
+
+  /* ---------- GRID SYSTEM ---------- */
+  .grid{
+    display:grid;
+    gap:16px;
+    margin-top:8px;
+  }
+  .grid.cols-2{ grid-template-columns:repeat(2, 1fr); }
+  .grid.cols-3{ grid-template-columns:repeat(3, 1fr); }
+  .grid.cols-4{ grid-template-columns:repeat(4, 1fr); }
+
+  .grid-item{ display:flex; flex-direction:column; gap:8px; }
+  .grid-item img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
+    display:block;
+    border-radius:2px;
+    background:var(--bg-soft);
+  }
+  .grid-item .cap{
+    font-size:12.5px;
+    color:var(--ink-faint);
+    text-align:center;
+  }
+
+  .banner-hero img{ height:260px; }
+  .popup-item img{ height:520px; }
+  .popup-wrap{ max-width:420px; margin:0 auto; }
+
+  @media (max-width:760px){
+    .wrap{ padding:0 22px; }
+    .hero-img{ height:220px; }
+    .media-frame{ height:220px; }
+    .grid.cols-3, .grid.cols-4{ grid-template-columns:repeat(2, 1fr); }
+    .grid-item img{ height:120px; }
+    .banner-hero img{ height:160px; }
+    .popup-item img{ height:340px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===================== HERO ===================== -->
+  <img class="hero-img" src="https://picsum.photos/seed/kfsh-hero/1600/900" alt="光復中學校園活動照片">
+
+  <div class="wrap">
+
+    <!-- ===================== 專案介紹 ===================== -->
+    <section>
+      <span class="tag">CASE STUDY</span>
+      <h1 class="project-title">光復中學招生季 社群暨官網優化</h1>
+      <div class="project-sub">協助整理年度招生資訊，重新規劃官網與社群內容呈現，提升招生資訊的曝光與觸及。</div>
+
+      <div class="body-text">
+        <p>
+          光復中學每年於招生期間需要進行固定的資訊更新與宣傳，包含<strong>學校資源介紹</strong>、<strong>招生資訊整理</strong>以及<strong>社群宣傳內容</strong>。
+        </p>
+        <p>
+          我們協助整理年度招生資訊，並針對家長與學生不同族群進行訊息內容的區分與調整，使資訊呈現更清晰易讀。
+        </p>
+        <p>
+          同時透過網站內容更新與社群短影音宣傳，提升招生資訊的曝光度，讓潛在學生與家長能更快速取得相關資訊。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 活動影片 ===================== -->
+    <section>
+      <span class="tag">VIDEO</span>
+      <h3 class="section-title">活動影片</h3>
+      <img class="media-frame" src="https://picsum.photos/seed/kfsh-video/900/560" alt="招生宣傳影片畫面">
+      <p class="caption">協助影片重新剪輯以及廣告投放，突破 9,000 次觀看。</p>
+      <div class="metric-row">
+        <div class="metric">
+          <div class="num">9,000+</div>
+          <div class="lab">影片觀看次數</div>
+        </div>
+        <div class="metric">
+          <div class="num">2</div>
+          <div class="lab">投放廣告輪次</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 網站宣傳內容更新 ===================== -->
+    <section>
+      <span class="tag">WEBSITE</span>
+      <h3 class="section-title">網站宣傳內容更新</h3>
+      <div class="body-text">
+        <p>針對招生期間的宣傳需求，協助更新官網相關內容與視覺版面，使招生資訊能在網站上更明顯呈現。</p>
+      </div>
+
+      <h4 class="sub-title">招生資訊頁面更新</h4>
+      <div class="grid cols-1 banner-hero">
+        <div class="grid-item">
+          <img src="https://picsum.photos/seed/kfsh-page1/1200/500" alt="招生資訊頁面主視覺截圖">
+          <div class="cap">2024 照護產業新趨勢｜招生資訊主視覺</div>
+        </div>
+      </div>
+
+      <h4 class="sub-title">網頁 Banner</h4>
+      <div class="grid cols-4">
+        <div class="grid-item">
+          <img src="https://picsum.photos/seed/kfsh-b1/400/300" alt="特色專班合作廠商 Banner">
+          <div class="cap">特色專班合作廠商</div>
+        </div>
+        <div class="grid-item">
+          <img src="https://picsum.photos/seed/kfsh-b2/400/300" alt="星光校友 Banner">
+          <div class="cap">星光校友</div>
+        </div>
+        <div class="grid-item">
+          <img src="https://picsum.photos/seed/kfsh-b3/400/300" alt="專業設施場地 Banner">
+          <div class="cap">專業設施場地</div>
+        </div>
+        <div class="grid-item">
+          <img src="https://picsum.photos/seed/kfsh-b4/400/300" alt="跨越世代共創未來 Banner">
+          <div class="cap">跨越世代．共創未來</div>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric">
+          <div class="num">5</div>
+          <div class="lab">頁面版位更新</div>
+        </div>
+        <div class="metric">
+          <div class="num">4</div>
+          <div class="lab">主題 Banner 產出</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 彈跳視窗 Popup ===================== -->
+    <section>
+      <span class="tag">POPUP</span>
+      <h3 class="section-title">網頁彈跳視窗 Popup</h3>
+      <div class="body-text">
+        <p>於首頁進站彈跳視窗放上當期招生重點（職科 16 科＋普通科、進修部、國立勤益產攜專班等），讓訪客第一時間掌握學校招生亮點與報名方式。</p>
+      </div>
+      <div class="grid cols-1 popup-wrap">
+        <div class="grid-item popup-item">
+          <img src="https://picsum.photos/seed/kfsh-popup/500/900" alt="網頁彈跳視窗 Popup 招生資訊設計">
+          <div class="cap">職科 16 科＋普通科｜招生資訊 Popup</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 社群貼文 ===================== -->
+    <section>
+      <span class="tag">SOCIAL</span>
+      <h3 class="section-title">社群貼文</h3>
+      <div class="body-text">
+        <p>同步整理國立大學保證班說明會場次與招生活動資訊，並統一社群帳號（Instagram／Facebook）QR Code 呈現方式，方便家長與學生快速加入追蹤。</p>
+      </div>
+      <div class="grid cols-2">
+        <div class="grid-item">
+          <img src="https://picsum.photos/seed/kfsh-social1/500/500" alt="國立大學保證班說明會社群貼文">
+          <div class="cap">國立大學保證班說明會場次公告</div>
+        </div>
+        <div class="grid-item">
+          <img src="https://picsum.photos/seed/kfsh-social2/500/500" alt="招生資訊 IG FB QR Code 社群貼文">
+          <div class="cap">Instagram／Facebook 帳號導流貼文</div>
+        </div>
+      </div>
+      <div class="metric-row">
+        <div class="metric">
+          <div class="num">2</div>
+          <div class="lab">說明會場次曝光</div>
+        </div>
+        <div class="metric">
+          <div class="num">2</div>
+          <div class="lab">社群平台導流</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>
+</body>
+</html>
