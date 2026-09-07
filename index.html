@@ -112,7 +112,7 @@
     font-weight: 300;
     font-style: italic;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+    -webkit-text-stroke: 1px rgba(255,255,255,0.5);
     letter-spacing: -0.02em;
     white-space: nowrap;
     user-select: none;
@@ -123,8 +123,8 @@
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
     background-size: 80px 80px;
     pointer-events: none;
     z-index: 0;
@@ -294,7 +294,7 @@
   .cat-bg-photo  { 
                   background-image: 
                   linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)), 
-                  url('/Portfolio/img/DSC00725.jpg');
+                  url('/img/DSC00725.jpg');
                   background-size: cover; 
                   background-position: center; 
                   background-repeat: no-repeat;
@@ -305,14 +305,31 @@
                     rgba(26, 13, 26, 0.6),    /* 中間 */
                     rgba(10, 13, 18, 0.7)     /* 右下 */
                   ),
-                  url('/Portfolio/img/DSC07852-2.jpg') ;
+                  url('/img/thisIsUs/DSC07852-2.jpg') ;
                   background-size: cover;
                   background-position: center;
                   background-repeat: no-repeat;
                   }
 
-  .cat-bg-web    { background: linear-gradient(135deg,#0a1a0a,#0d2b1a,#081408); }
-  .cat-bg-uiux   { background: linear-gradient(135deg,#1a1a2e,#16213e,#0f2244); }
+  .cat-bg-web    { background: linear-gradient(135deg,
+                rgba(10, 26, 10, 0.5),
+                rgba(26, 10, 0, 0.7),
+                rgba(8, 20, 8, 0.5)),
+                  url('/img/web/Thumbnail.png');
+                  background-size: cover;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                }
+  .cat-bg-uiux   { 
+                background: linear-gradient(135deg,
+                 rgba(26,26,46,0.5), 
+                 rgba(22,33,62,0.5),
+                rgba(15,34,68,0.5)),
+                url('/img/34.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+               }
 
   .cat-overlay { position:absolute;top:0;left:0;right:0;bottom:0; 
                   background: linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.1) 50%,transparent 100%); }
@@ -572,7 +589,7 @@
       <div class="cat-num">01</div>
       <div class="cat-body">
         <div class="cat-label">Photography</div>
-        <div class="cat-title">攝影作品</div>
+        <div class="cat-title">平面攝影</div>
         <div class="cat-sub">街拍 · 人像 · 風景</div>
         <div class="cat-cta">查看圖庫 →</div>
       </div>
@@ -637,9 +654,9 @@
       <div class="cat-overlay"></div>
       <div class="cat-num">04</div>
       <div class="cat-body">
-        <div class="cat-label">UI / UX</div>
-        <div class="cat-title">UI/UX 設計</div>
-        <div class="cat-sub">流程規劃 · Figma · Prototyping</div>
+        <div class="cat-label">影像實記</div>
+        <div class="cat-title">影像實記</div>
+        <div class="cat-sub">Prototyping</div>
         <div class="cat-cta">查看專案 →</div>
       </div>
       <svg class="cat-deco" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -760,27 +777,27 @@
         { title: '此岸-偶動畫美術設計', 
         desc: '以深色系為基調，結合 Cormorant Garamond 字體，打造高質感設計師作品集。', 
         tags: ['HTML', 'CSS', 'JavaScript'],
-        link: '/YiyuProjectUpdate/ceremony.html' },
+        link: '/ceremony.html' },
 
         { title: '曠野之心-耳環品牌視覺設計', 
         desc: '商品瀏覽、購物車與結帳流程完整實作，RWD 響應式設計。', 
         tags: ['React', 'Tailwind', 'API'],
-        link: '/Portfolio/wildest.html' },
+        link: '/wildest.html' },
 
         { title: '大手牽小手-兒童舞台劇展演', 
         desc: '大手牽小手，希望起步走', 
         tags: ['Vue.js', 'GSAP', 'Figma'],
-        link: '/Portfolio/HandInHandEvent.html' },
+        link: '/HandInHandEvent.html' },
 
         { title: '光復中學招生季活動視覺設計', 
         desc: '以圖片為核心的展示頁，瀑布流圖庫搭配全螢幕燈箱效果。', 
         tags: ['HTML', 'CSS Grid', 'JS'],
-        link: '/Portfolio/kfshSchool.html' },
+        link: '/kfshSchool.html' },
 
         { title: '新竹縣工業會視覺整合設計', 
         desc: '數據視覺化儀表板，包含圖表、統計卡片與篩選功能。', 
         tags: ['React', 'D3.js', 'CSS'],
-        link: '/Portfolio/hciaBrand.html' },
+        link: '/hciaBrand.html' },
 
         { title: '估月日光', desc: '表單設計與驗證邏輯，配合活動主視覺進行頁面氛圍設定。', tags: ['HTML', 'JavaScript', 'CSS'] },
       ]
@@ -798,7 +815,7 @@
       ]
     },
     uiux: {
-      title: 'UI / UX 設計',
+      title: '影像實記',
       type: 'projects',
       items: [
         { title: 'UI Flow 規劃', desc: '以 Figma 建立完整使用者流程圖，涵蓋主要路徑與邊緣情境。', tags: ['Figma', 'User Flow', 'Wireframe'] },
