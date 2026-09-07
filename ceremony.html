@@ -19,13 +19,15 @@
     --line: rgba(239,230,216,0.14);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth; overflow-x:hidden;}
   body{
     background:var(--ink);
     color:var(--bone);
     font-family:'Noto Sans TC', sans-serif;
     line-height:1.9;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    width:100%;
   }
   img,svg{display:block; max-width:100%;}
   .wrap{max-width:1180px; margin:0 auto; padding:0 40px;}
@@ -45,7 +47,7 @@
     font-size: 1.4rem;
     font-weight: 300;
     letter-spacing: 0.05em;
-    color: var(--text);
+    color: var(--bone);
     text-decoration: none;
   }
   .nav-links {
@@ -56,11 +58,11 @@
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--text2);
+    color: var(--paper);
     text-decoration: none;
     transition: color 0.3s;
   }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover { color: var(--ember); }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -251,11 +253,10 @@
     padding:22px 12px 20px;
     display:flex;
     flex-direction:column;
-    min-height:2.8em; 
-     height:350px; 
+    min-height:300px;
   }
-  .avatar{width:100%; 
-    aspect-ratio:1/1.15; 
+  .avatar{width:100%;
+    aspect-ratio:1/1.15;
     margin-bottom:14px;
 
   }
@@ -266,7 +267,7 @@
   }
   .team-card .role{
     font-size:11px; color:var(--gold); margin-top:6px; letter-spacing:0.03em;
-    margin-top:auto; 
+    margin-top:auto;
   }
 
   /* ---------- CHARACTER ---------- */
@@ -276,7 +277,7 @@
   }
   .character-grid{
     display:grid;
-    grid-template-columns:20fr 5fr;
+    grid-template-columns:3fr 2fr;
     gap:32px;
     align-items:center;
     max-width:1000px;
@@ -299,6 +300,7 @@
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;             /* 避免側邊卡片撐寬手機版面造成橫向捲動 */
 }
 .cc-track{
   position:relative;
@@ -492,13 +494,13 @@
     position:absolute; left:0; color:var(--ember);
   }
   .lily-field{
-    position:absolute; 
+    position:absolute;
     transform:translateX(-50%);
-    left:50%; 
-    bottom:-130px; 
+    left:50%;
+    bottom:-130px;
     height:auto;
     width:120%;
-    z-index:-1; 
+    z-index:-1;
     opacity:0.9;
   }
 
@@ -520,14 +522,34 @@
   }
   @media(max-width:520px){
     .wrap{padding:0 20px;}
-    .title-block{padding:70px 20px 50px;}
+
+    nav{padding:0.9rem 1.1rem;}
+    .nav-logo{font-size:1.1rem;}
+    .nav-links{gap:1.2rem;}
+    .nav-links a{font-size:0.6rem; letter-spacing:0.12em;}
+
+    .hero{min-height:300px; height:52vh;}
+
+    .title-block{padding:64px 20px 40px;}
+    .title-block img[alt*="LOGO"]{width:140px !important;}
+
+    .badges{gap:18px; margin:32px 0 26px;}
+    .badge-gpin img,
+    .badge-vgw img{width:96px !important;}
+
     section.article{padding:48px 20px;}
     .team{padding:50px 20px;}
+    .team-grid{grid-template-columns:repeat(2,1fr); gap:14px;}
+    .team-card{min-height:auto; padding:16px 10px 14px;}
+
     .character{padding:50px 20px;}
     .stage{padding:50px 20px 70px;}
-    .team-grid{grid-template-columns:repeat(2,1fr);}
+
     .badges{gap:24px;}
     .carousel-track{grid-template-columns:repeat(2,1fr); height:160px;}
+
+    .awards{min-height:380px; padding:60px 20px 90px;}
+    .lily-field{width:170%; bottom:-80px;}
   }
 </style>
 </head>
@@ -560,7 +582,7 @@
     src="./img/ceremony/logo/ceromony-logo-w.png"
     loading="lazy"
     alt="此岸 CEREMONY LOGO"
-    style="width:200px; height:auto; display:block; margin:0 auto;">
+    style="width:200px; height:auto; display:block; margin:0 auto; max-width:60vw;">
 
   <div class="logo-sub">ceremony</div>
 
@@ -593,17 +615,17 @@
 
 <!-- ================= video ================= -->
  <div class="video-wrap">
- <iframe 
- width="560" 
- height="315" 
- src="https://www.youtube.com/embed/f-mb8g_phy8?si=Z6jkgUizybd9OAqF" 
- title="YouTube video player" 
- frameborder="0" 
- allow="accelerometer; 
- autoplay; clipboard-write; 
- encrypted-media; 
- gyroscope; picture-in-picture; web-share" 
- referrerpolicy="strict-origin-when-cross-origin" 
+ <iframe
+ width="560"
+ height="315"
+ src="https://www.youtube.com/embed/f-mb8g_phy8?si=Z6jkgUizybd9OAqF"
+ title="YouTube video player"
+ frameborder="0"
+ allow="accelerometer;
+ autoplay; clipboard-write;
+ encrypted-media;
+ gyroscope; picture-in-picture; web-share"
+ referrerpolicy="strict-origin-when-cross-origin"
  allowfullscreen></iframe>
  </div>
 
@@ -657,8 +679,7 @@
       <img
         src="./img/ceremony/character/01 (5).png"
         class="avatar"
-        loading="lazy"
-        width="100" height="90%">
+        loading="lazy">
 
         <div class="name">蔡采絹</div>
         <div class="name">TSAI-CHUAN HUANG</div>
@@ -668,8 +689,7 @@
       <img
         src="./img/ceremony/character/01 (3).png"
         class="avatar"
-        loading="lazy"
-        width="100" height="90%">
+        loading="lazy">
       <div class="name">張瑜庭</div>
       <div class="name">YU-TING CHANG</div>
       <div class="role">導演／分鏡／美術</div>
@@ -678,8 +698,7 @@
       <img
         src="./img/ceremony/character/01 (4).png"
         class="avatar"
-        loading="lazy"
-        width="100" height="90%">
+        loading="lazy">
       <div class="name">岑祈萱</div>
       <div class="name">CHI-HSUAN TSENG</div>
       <div class="role">美術／道具／後製</div>
@@ -688,8 +707,7 @@
       <img
         src="./img/ceremony/character/01 (2).png"
         class="avatar"
-        loading="lazy"
-        width="100" height="90%">
+        loading="lazy">
       <div class="name">陳禕羽</div>
       <div class="name">YI-YU CHEN</div>
       <div class="role">美術／攝影／後製</div>
@@ -698,8 +716,7 @@
       <img
         src="./img/ceremony/character/01 (6).png"
         class="avatar"
-        loading="lazy"
-        width="100" height="90%">
+        loading="lazy">
       <div class="name">聶琡鳳</div>
       <div class="name">CHU-FONG NIE</div>
       <div class="role">美術／道具／後製</div>
@@ -730,8 +747,8 @@
         <div class="cc-item" data-index="2"><img src="./img/ceremony/layout/01 (3).jpg" alt="分鏡 3" loading="lazy"></div>
         <div class="cc-item" data-index="3"><img src="./img/ceremony/layout/01 (4).jpg" alt="分鏡 4" loading="lazy"></div>
         <div class="cc-item" data-index="4"><img src="./img/ceremony/layout/01 (5).jpg" alt="分鏡 5" loading="lazy"></div>
-        <div class="cc-item" data-index="5"><img src="./img/ceremony/layout/2--2.jpg"alt="分鏡 6" loading="lazy"></div>
-        
+        <div class="cc-item" data-index="5"><img src="./img/ceremony/layout/2--2.jpg" alt="分鏡 6" loading="lazy"></div>
+      </div>
       <button class="cc-arrow cc-next" id="sbNext" aria-label="下一張">›</button>
     </div>
   </div>
@@ -804,8 +821,8 @@
     <li>2020 台灣國際學生創意設計大賽－數位動畫類 入圍</li>
     <li>2020 第16屆技專校院電腦動畫競賽－佳作</li>
   </ul>
-  <img class="lily-field" 
-  src="./img//ceremony/layout/01 (1).png" 
+  <img class="lily-field"
+  src="./img//ceremony/layout/01 (1).png"
   alt="彼岸花田" loading="lazy">
 
 
@@ -813,20 +830,26 @@
 
 <footer>此岸 CEREMONY — DESIGN PORTFOLIO RECREATION</footer>
 
-</body>
-</html>
 <script>
 
-  <!--分鏡腳本輪播圖-->
+  /* 分鏡腳本輪播圖 */
   (function(){
   const items = Array.from(document.querySelectorAll('#sbTrack .cc-item'));
   const total = items.length;
   const interval = 4000;      // 對應 :interval="4000"
-  const spacing = 190;        // 側邊卡片的水平間距
   let current = 0;
   let timer = null;
 
+  // 依目前卡片實際寬度計算間距，手機縮小時側邊卡片會自動貼近，避免撐寬版面
+  function getSpacing(){
+    const item = items[0];
+    if(!item) return 190;
+    const width = item.getBoundingClientRect().width || 320;
+    return Math.round(width * 0.6);
+  }
+
   function render(){
+    const spacing = getSpacing();
     items.forEach((el, i) => {
       // 計算跟目前置中卡片的最短距離（環狀）
       let distance = i - current;
@@ -877,12 +900,15 @@
   carousel.addEventListener('mouseenter', stopAutoplay);
   carousel.addEventListener('mouseleave', startAutoplay);
 
+  // 轉方向或縮放視窗時（手機切換直向/橫向）重新計算卡片間距
+  window.addEventListener('resize', render);
+
   render();
   startAutoplay();
 })();
 
 
-  <!--劇照燈箱-->
+  /* 劇照燈箱 */
   (function(){
   // ===== 對應 el-image 的 props =====
   const srcList = [
@@ -993,5 +1019,6 @@
   });
 })();
 
-
 </script>
+</body>
+</html>
