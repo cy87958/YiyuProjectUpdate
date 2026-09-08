@@ -103,8 +103,8 @@
     flex-wrap:wrap;
   }
   .intro-logo{
-    width:320px;
-    height:auto;
+    width:100%;
+    max-width:320px;
     flex-shrink:0;
     display:flex;
     align-items:center;
@@ -114,6 +114,12 @@
     border-radius:8px;
     text-align:center;
     padding:14px;
+  }
+  .intro-logo img{
+    display:block;
+    width:100%;
+    max-width:100%;
+    height:auto;
   }
   .intro-logo .placeholder-label{
     font-family:"JetBrains Mono", monospace;
@@ -159,16 +165,86 @@
   .body-text p.gap-top{ margin-top:20px; }
   .body-text p:last-child{ margin-bottom:0; }
 
-  /* ---------- 活動影片 ---------- */
-  .media-frame{
+  /* ---------- 活動影片 (輪播) ---------- */
+  .video-carousel{
+    position:relative;
     width:100%;
-    max-width:1040px;
-    height:420px;
-    object-fit:cover;
-    display:block;
-    border-radius:2px;
-    margin-bottom:24px;
+    max-width:800px;
+    margin:0 auto 24px;
+  }
+  .video-carousel-stage{
+    position:relative;
+    width:100%;
+    aspect-ratio:16 / 9;
     background:#000;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .video-carousel-stage iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+    display:none;
+  }
+  .video-carousel-stage iframe.active{
+    display:block;
+  }
+  .video-carousel-caption{
+    text-align:center;
+    font-size:13px;
+    color:var(--ink-dim);
+    font-family:"JetBrains Mono", monospace;
+    letter-spacing:0.06em;
+    margin-top:10px;
+  }
+  .video-carousel-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid var(--rule);
+    background:rgba(18,18,18,0.85);
+    color:#fff;
+    font-size:22px;
+    line-height:1;
+    cursor:pointer;
+    z-index:3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background 0.2s ease, opacity 0.2s ease;
+  }
+  .video-carousel-arrow:hover{ background:#1f1f1f; }
+  .video-carousel-prev{ left:-54px; }
+  .video-carousel-next{ right:-54px; }
+  .video-carousel-dots{
+    display:flex;
+    justify-content:center;
+    gap:9px;
+    margin-top:14px;
+  }
+  .video-carousel-dots .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.3);
+    cursor:pointer;
+    transition:background 0.3s ease, transform 0.3s ease;
+  }
+  .video-carousel-dots .dot.active{
+    background:#3a7a4a;
+    transform:scale(1.2);
+  }
+
+  @media (max-width:900px){
+    .video-carousel{ max-width:100%; }
+    .video-carousel-prev{ left:6px; }
+    .video-carousel-next{ right:6px; }
+    .video-carousel-arrow{ width:36px; height:36px; font-size:18px; }
   }
 
   /* ---------- 活動平面攝影（縮圖 + 燈箱） ---------- */
@@ -180,7 +256,7 @@
   .demo-image-preview{
     position:relative;
     width:100%;
-    height:180px;
+    aspect-ratio:1 / 1;
     overflow:hidden;
     cursor:zoom-in;
     background:var(--bg-soft);
@@ -327,27 +403,46 @@
     letter-spacing:0.08em;
   }
   .asset-poster{ grid-column:1; grid-row:1 / span 2; }
-  .asset-poster img{ height:440px; }
+  .asset-poster img{ aspect-ratio:3 / 4; height:auto; }
   .asset-calendar{ grid-column:2; grid-row:1; }
-  .asset-calendar img{ height:220px; }
+  .asset-calendar img{ aspect-ratio:16 / 10; height:auto; }
   .asset-backdrop{ grid-column:2; grid-row:2; }
-  .asset-backdrop img{ height:150px; }
+  .asset-backdrop img{ aspect-ratio:21 / 9; height:auto; }
   .asset-dm{ grid-column:1; grid-row:3; }
-  .asset-dm img{ height:220px; }
+  .asset-dm img{ aspect-ratio:16 / 10; height:auto; }
   .asset-social{ grid-column:2; grid-row:3; }
-  .asset-social img{ height:220px; }
+  .asset-social img{ aspect-ratio:4 / 3; height:auto; }
 
   @media (max-width:760px){
     .wrap{ padding:0 22px; }
-    .hero-slideshow{ height:260px; }
+    .hero-slideshow{ height:300px; }
     .intro{ gap:28px; }
-    .stage-grid{ grid-template-columns:repeat(2,1fr); }
-    .demo-image-preview{ height:130px; }
     .img-lb-arrow{ font-size:32px; padding:8px 10px; }
-    .asset-grid{ grid-template-columns:1fr 1fr; }
-    .asset-poster img{ height:260px; }
-    .asset-calendar img,.asset-dm img,.asset-social img{ height:150px; }
-    .asset-backdrop img{ height:100px; }
+  }
+
+  @media (max-width:600px){
+    .hero-slideshow{ height:240px; }
+    .stage-grid{ grid-template-columns:repeat(2,1fr); gap:10px; }
+    .asset-grid{
+      grid-template-columns:1fr;
+      grid-template-rows:none;
+      gap:20px;
+      max-width:100%;
+    }
+    .asset-poster,.asset-calendar,.asset-backdrop,.asset-dm,.asset-social{
+      grid-column:1;
+      grid-row:auto;
+    }
+    .asset-poster img{ aspect-ratio:16 / 10; }
+    .video-carousel-caption{ font-size:12px; }
+  }
+
+  @media (max-width:380px){
+    .wrap{ padding:0 16px; }
+    .hero-slideshow{ height:200px; }
+    .intro{ gap:20px; }
+    .stage-grid{ grid-template-columns:repeat(2,1fr); gap:8px; }
+    .channel-list li .chan-name{ min-width:140px; }
   }
 </style>
 </head>
@@ -370,8 +465,6 @@
       <div class="intro">
         <div class="intro-logo">
           <img src="/img/handToHand/logo/LOGO-BigHand-color-01.svg"
-              width="320"
-              height="auto"
               alt="活動 LOGO 設計">
         </div>
         <div class="intro-text">
@@ -383,10 +476,34 @@
       </div>
     </section>
 
-    <!-- ===================== 活動影片 ===================== -->
+    <!-- ===================== 活動影片（輪播） ===================== -->
     <section>
       <h3 class="section-title">活動影片</h3>
-      <video class="media-frame" src="/img/handToHand/video/劇場表演-愛道歉的小狐狸.mp4" controls playsinline></video>
+
+      <div class="video-carousel" id="videoCarousel">
+        <button class="video-carousel-arrow video-carousel-prev" id="videoPrev" aria-label="上一部影片">‹</button>
+
+        <div class="video-carousel-stage" id="videoStage">
+          <iframe class="active"
+            src="https://www.youtube.com/embed/MSLgYoSUfF4?si=vf0odtK7LLCyKpGB"
+            title="活動影片 1"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+
+          <!-- TODO：請替換成第二部影片的 YouTube 連結 -->
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/2deljFkGfQE?si=nP3akoL5Oe7M5s2z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+          <!-- TODO：請替換成第三部影片的 YouTube 連結 -->
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/EJHTiOJjyT4?si=vsHUAMplMvLdQoWy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <button class="video-carousel-arrow video-carousel-next" id="videoNext" aria-label="下一部影片">›</button>
+
+        <div class="video-carousel-dots" id="videoDots"></div>
+      </div>
+
       <div class="body-text">
         <p>
           邀請兒童戲劇教育工作者——蘋果劇團演出寓言舞台劇《愛說謊的小狐狸》，透過故事劇情傳遞誠實與成長的價值，讓孩子在觀賞表演的過程中，自然地接觸品格教育，也促進親子間的互動與討論。
@@ -575,6 +692,47 @@
   }
 
   restart();
+})();
+</script>
+
+<!-- ===================== 活動影片輪播 Video Carousel ===================== -->
+<script>
+(function(){
+  var stage = document.getElementById('videoStage');
+  var iframes = Array.prototype.slice.call(stage.querySelectorAll('iframe'));
+  var dotsWrap = document.getElementById('videoDots');
+  var prevBtn = document.getElementById('videoPrev');
+  var nextBtn = document.getElementById('videoNext');
+  var current = 0;
+
+  // 建立圓點指示器
+  iframes.forEach(function(_, i){
+    var dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(dot);
+  });
+  var dots = dotsWrap.querySelectorAll('.dot');
+
+  function stopVideo(iframe){
+    // 切走時重新載入 src，讓 YouTube 影片停止播放
+    var src = iframe.getAttribute('src');
+    iframe.setAttribute('src', src);
+  }
+
+  function goTo(index){
+    if (index === current) return;
+    iframes[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    stopVideo(iframes[current]);
+
+    current = (index + iframes.length) % iframes.length;
+    iframes[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+  nextBtn.addEventListener('click', function(){ goTo(current + 1); });
 })();
 </script>
 
