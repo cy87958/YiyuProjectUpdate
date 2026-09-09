@@ -294,7 +294,7 @@
   .cat-bg-photo  { 
                   background-image: 
                   linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)), 
-                  url('/img/DSC00725.jpg');
+                  url('./img/photo/02(1).jpg');
                   background-size: cover; 
                   background-position: center; 
                   background-repeat: no-repeat;
@@ -305,7 +305,7 @@
                     rgba(26, 13, 26, 0.6),    /* 中間 */
                     rgba(10, 13, 18, 0.7)     /* 右下 */
                   ),
-                  url('/img/thisIsUs/DSC07852-2.jpg') ;
+                  url('./img/photo/DSC07852-2.jpg'); 
                   background-size: cover;
                   background-position: center;
                   background-repeat: no-repeat;
@@ -315,7 +315,7 @@
                 rgba(10, 26, 10, 0.5),
                 rgba(26, 10, 0, 0.7),
                 rgba(8, 20, 8, 0.5)),
-                  url('/img/web/Thumbnail.png');
+                  url('./img/photo/Thumbnail.png');
                   background-size: cover;
                   background-position: center;
                   background-repeat: no-repeat;
@@ -325,7 +325,7 @@
                  rgba(26,26,46,0.5), 
                  rgba(22,33,62,0.5),
                 rgba(15,34,68,0.5)),
-                url('/img/34.jpg');
+                url('./img/photo/02(4).jpg');
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
@@ -351,8 +351,23 @@
   .lb-title { font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--text); }
   .lb-header-right { display:flex;align-items:center;gap:1rem; }
   .lb-count { font-size:0.6rem;letter-spacing:0.2em;color:var(--text3); }
-  .lb-close { background:none;border:1px solid var(--border2);color:var(--text2);font-size:0.9rem;width:36px;height:36px;cursor:pointer;transition:border-color 0.3s,color 0.3s;display:flex;align-items:center;justify-content:center; }
-  .lb-close:hover { border-color:var(--accent);color:var(--accent); }
+  .lb-close {
+    background:#CFC488;
+    border:1px solid #CFC488;
+    color:#000;
+    font-size:0.9rem;
+    width:36px;height:36px;
+    cursor:pointer;
+    transition:background-color 0.3s, border-color 0.3s, transform 0.3s;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:600;
+  }
+  .lb-close:hover {
+    background:#e0d4a0;
+    border-color:#e0d4a0;
+    color:#000;
+    transform:scale(1.05);
+  }
 
   /* Vertical scroll gallery */
   .lb-scroll { flex:1;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth; }
