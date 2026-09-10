@@ -515,6 +515,11 @@
     .lb-masonry { columns: 1; }
     .lb-prev { left: 0.5rem; } .lb-next { right: 0.5rem; }
   }
+/* 手機面板上滑鼠指標不會擋網頁 */
+  @media (hover: none), (pointer: coarse) {
+  .cursor, .cursor-ring { display: none; }
+  body { cursor: auto; }
+}
 </style>
 </head>
 <body>
@@ -791,52 +796,57 @@
       items: [
         { title: '此岸-偶動畫美術設計', 
         desc: '以深色系為基調，結合 Cormorant Garamond 字體，打造高質感設計師作品集。', 
-        tags: ['HTML', 'CSS', 'JavaScript'],
+        tags: ['illustration', 'photoshop', 'premiere', 'After Effects'],
         link: './ceremony.html' },
 
         { title: '曠野之心-耳環品牌視覺設計', 
         desc: '商品瀏覽、購物車與結帳流程完整實作，RWD 響應式設計。', 
-        tags: ['React', 'Tailwind', 'API'],
+        tags: ['figma', 'captureone', 'filezilla','photoshop'],
         link: './wildest.html' },
 
         { title: '大手牽小手-兒童舞台劇展演', 
         desc: '大手牽小手，希望起步走', 
-        tags: ['Vue.js', 'GSAP', 'Figma'],
+        tags: ['photoshop', 'illustration', ],
         link: './HandInHandEvent.html' },
 
         { title: '光復中學招生季活動視覺設計', 
         desc: '以圖片為核心的展示頁，瀑布流圖庫搭配全螢幕燈箱效果。', 
-        tags: ['HTML', 'CSS Grid', 'JS'],
+        tags: ['photoshop', 'illustration'],
         link: './kfshSchool.html' },
 
         { title: '新竹縣工業會視覺整合設計', 
         desc: '數據視覺化儀表板，包含圖表、統計卡片與篩選功能。', 
-        tags: ['React', 'D3.js', 'CSS'],
+        tags: ['photoshop', 'illustration'],
         link: './hciaBrand.html' },
 
         { title: '估月日光', desc: '表單設計與驗證邏輯，配合活動主視覺進行頁面氛圍設定。', tags: ['HTML', 'JavaScript', 'CSS'] },
+
+        { title: '方舟街頭藝術-牆壁壁畫', 
+        desc: '', 
+        tags: ['photoshop', 'illustration'],
+        link: '' },
+
+        { title: 'Apple電腦殼設計', 
+        desc: '', 
+        tags: ['photoshop', 'illustration'],
+        link: '' },
       ]
     },
     web: {
       title: '網頁設計',
       type: 'projects',
       items: [
-        { title: '個人作品集網站', desc: '以深色系為基調，結合 Cormorant Garamond 字體，打造高質感設計師作品集。', tags: ['HTML', 'CSS', 'JavaScript'] },
-        { title: '電商平台前端', desc: '商品瀏覽、購物車與結帳流程完整實作，RWD 響應式設計。', tags: ['React', 'Tailwind', 'API'] },
-        { title: '品牌官網設計', desc: '從視覺識別延伸至網頁呈現，包含品牌色彩系統與動態效果。', tags: ['Vue.js', 'GSAP', 'Figma'] },
-        { title: '攝影師作品集', desc: '以圖片為核心的展示頁，瀑布流圖庫搭配全螢幕燈箱效果。', tags: ['HTML', 'CSS Grid', 'JS'] },
-        { title: 'Dashboard 介面', desc: '數據視覺化儀表板，包含圖表、統計卡片與篩選功能。', tags: ['React', 'D3.js', 'CSS'] },
-        { title: '活動報名頁面', desc: '表單設計與驗證邏輯，配合活動主視覺進行頁面氛圍設定。', tags: ['HTML', 'JavaScript', 'CSS'] },
+        { title: '律師一頁式網頁', desc: '為律師事務所設計的一頁式網站，展示服務項目與聯絡資訊。', 
+        tags: ['HTML', 'CSS', 'JavaScript'],
+        link: './lawyer.html'
+       },
       ]
     },
     uiux: {
       title: '影像實記',
       type: 'projects',
       items: [
-        { title: 'UI Flow 規劃', desc: '以 Figma 建立完整使用者流程圖，涵蓋主要路徑與邊緣情境。', tags: ['Figma', 'User Flow', 'Wireframe'] },
-        { title: '行動 App 設計', desc: '從 UX 研究到 UI 設計，建立統一的設計語言與元件庫。', tags: ['Figma', 'Prototype', 'UX Research'] },
-        { title: '電商 App 重設計', desc: '分析使用者痛點後，重新規劃資訊架構與互動流程。', tags: ['Figma', 'Usability Test', 'IA'] },
-        { title: 'SaaS 後台介面', desc: 'B2B 軟體後台設計，強調資訊密度與操作效率。', tags: ['Figma', 'Design System', 'UI Kit'] },
+        { title: '', desc: '', tags: [''] },
       ]
     }
   };
@@ -921,6 +931,15 @@
   document.querySelectorAll('.cat-card').forEach(card => {
     card.addEventListener('click', () => openLightbox(card.dataset.category));
   });
+
+  // 關閉手機上的自訂游標，避免遮擋網頁內容
+  const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+if (isTouchDevice) {
+  cursor.style.display = 'none';
+  ring.style.display = 'none';
+  document.body.style.cursor = 'auto';
+}
+
 </script>
 </body>
 </html>

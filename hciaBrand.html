@@ -231,82 +231,84 @@
   /* ---------- VIDEO CAROUSEL ---------- */
   .video-carousel{
     position:relative;
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin-top:20px;
-    touch-action:pan-y;
-  }
-  .vc-viewport{
-    overflow:hidden;
     width:100%;
+    max-width:800px;
+    margin:20px auto 0;
   }
-  .vc-track{
-    display:flex;
-    transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);
-  }
-  .vc-slide{
-    flex:0 0 100%;
-    display:flex;
-    justify-content:center;
-  }
-  .vc-slide .media-frame{
+  .video-carousel-stage{
+    position:relative;
     width:100%;
-    max-width:700px;
-    height:394px;
+    aspect-ratio:16 / 9;
     background:#000;
+    border-radius:2px;
+    overflow:hidden;
   }
-  .vc-slide video{
+  .video-carousel-stage iframe{
+    position:absolute;
+    inset:0;
     width:100%;
     height:100%;
-    object-fit:contain;
+    border:0;
+    display:none;
   }
-  .vc-btn{
-    flex-shrink:0;
-    width:40px;
-    height:40px;
+  .video-carousel-stage iframe.active{
+    display:block;
+  }
+  .video-carousel-caption{
+    text-align:center;
+    font-size:13px;
+    color:var(--ink-dim);
+    font-family:"JetBrains Mono", monospace;
+    letter-spacing:0.06em;
+    margin-top:10px;
+  }
+  .video-carousel-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:42px;
+    height:42px;
     border-radius:50%;
-    background:var(--gold);
-    border:1px solid var(--gold);
-    color:#000;
-    font-size:1.3rem;
-    font-weight:700;
+    border:1px solid var(--rule);
+    background:rgba(18,18,18,0.85);
+    color:#fff;
+    font-size:22px;
     line-height:1;
     cursor:pointer;
+    z-index:3;
     display:flex;
     align-items:center;
     justify-content:center;
-    transition:background-color 0.3s, border-color 0.3s, color 0.3s, transform 0.3s;
+    transition:background 0.2s ease, opacity 0.2s ease;
   }
-  .vc-btn:hover{
-    background:#000;
-    border-color:var(--gold);
-    color:var(--gold);
-    transform:scale(1.05);
-  }
-  .vc-btn:disabled{
-    opacity:0.3;
-    cursor:default;
-    transform:none;
-  }
-  .vc-dots{
+  .video-carousel-arrow:hover{ background:#1f1f1f; }
+  .video-carousel-arrow:disabled{ opacity:0.3; cursor:default; }
+  .video-carousel-prev{ left:-54px; }
+  .video-carousel-next{ right:-54px; }
+  .video-carousel-dots{
     display:flex;
     justify-content:center;
-    gap:8px;
+    gap:9px;
     margin-top:14px;
   }
-  .vc-dot{
-    width:7px;
-    height:7px;
+  .video-carousel-dots .dot{
+    width:8px;
+    height:8px;
     border-radius:50%;
-    background:var(--rule);
-    border:1px solid var(--rule);
+    background:rgba(255,255,255,0.3);
     cursor:pointer;
-    padding:0;
+    transition:background 0.3s ease, transform 0.3s ease;
   }
-  .vc-dot.active{
+  .video-carousel-dots .dot.active{
     background:var(--gold);
-    border-color:var(--gold);
+    transform:scale(1.2);
+  }
+
+  @media (max-width:900px){
+    .video-carousel{ max-width:100%; }
+    .video-carousel-prev{ left:6px; }
+    .video-carousel-next{ right:6px; }
+    .video-carousel-arrow{ width:36px; height:36px; font-size:18px; }
   }
 
   /* ---------- Tablet / 平板 ---------- */
@@ -329,9 +331,6 @@
     .media-frame{ height:210px; }
     .media-frame.tall{ height:260px; }
     .media-frame.short{ height:180px; }
-    .vc-slide .media-frame{ height:200px; }
-    .video-carousel{ gap:8px; }
-    .vc-btn{ width:38px; height:38px; font-size:1.15rem; flex-shrink:0; }
     .swatch-strip{
       flex-wrap:wrap;
       height:auto;
@@ -355,8 +354,7 @@
     .media-frame{ height:180px; }
     .media-frame.tall{ height:220px; }
     .media-frame.short{ height:150px; }
-    .vc-slide .media-frame{ height:170px; }
-    .vc-btn{ width:34px; height:34px; font-size:1rem; }
+    .video-carousel-arrow{ width:34px; height:34px; font-size:1rem; }
     .swatch{ flex:1 1 100%; height:auto; padding:10px 12px; }
   }
 </style>
@@ -373,7 +371,7 @@
 
       <div class="intro-row">
         <div class="intro-logo">
-          <img src="/img/hciaBrand/logo/logo-color 1.png" alt="新竹縣工業會 LOGO">
+          <img src="./img/hciaBrand/logo/logo-color 1.png" alt="新竹縣工業會 LOGO">
         </div>
         <div class="intro-body">
           <div class="body-text">
@@ -478,31 +476,16 @@
       <h3 class="section-title">會員大會活動</h3>
 
       <div class="video-carousel">
-        <button class="vc-btn vc-prev" type="button" aria-label="上一部影片">‹</button>
-        <div class="vc-viewport">
-          <div class="vc-track" id="vcTrack">
-            <div class="vc-slide">
-              <div class="media-frame">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/8P4WaxkHWvQ?si=bKOhztscNSYJY4D8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="vc-slide">
-              <div class="media-frame">
-                <!-- 請將下方 src 換成第二支影片的檔案路徑 -->
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/K08L7SpMLNM?si=w9J2-qALnjAud08C" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-            </div>
-            <div class="vc-slide">
-              <div class="media-frame">
-                <!-- 請將下方 src 換成第三支影片的檔案路徑 -->
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/as7o5VyHFNc?si=odMDQHdKR4mNDRhT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-            </div>
-          </div>
+        <button class="video-carousel-arrow video-carousel-prev" type="button" aria-label="上一部影片">‹</button>
+        <div class="video-carousel-stage" id="vcStage">
+          <iframe class="active" src="https://www.youtube.com/embed/8P4WaxkHWvQ?si=bKOhztscNSYJY4D8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/K08L7SpMLNM?si=w9J2-qALnjAud08C" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/as7o5VyHFNc?si=odMDQHdKR4mNDRhT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-        <button class="vc-btn vc-next" type="button" aria-label="下一部影片">›</button>
+        <button class="video-carousel-arrow video-carousel-next" type="button" aria-label="下一部影片">›</button>
       </div>
-      <div class="vc-dots" id="vcDots"></div>
+      <div class="video-carousel-caption" id="vcCaption">01 / 03</div>
+      <div class="video-carousel-dots" id="vcDots"></div>
 
       <div class="grid cols-2" style="margin-top:28px;">
         <div class="grid-item">
@@ -582,37 +565,42 @@
 
 <script>
   (function(){
-    const track = document.getElementById('vcTrack');
+    const stage = document.getElementById('vcStage');
+    const iframes = Array.from(stage.querySelectorAll('iframe'));
     const dotsWrap = document.getElementById('vcDots');
-    const slides = track.querySelectorAll('.vc-slide');
-    const prevBtn = document.querySelector('.vc-prev');
-    const nextBtn = document.querySelector('.vc-next');
+    const caption = document.getElementById('vcCaption');
+    const prevBtn = document.querySelector('.video-carousel-prev');
+    const nextBtn = document.querySelector('.video-carousel-next');
     let index = 0;
 
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'vc-dot' + (i === 0 ? ' active' : '');
-      dot.type = 'button';
-      dot.setAttribute('aria-label', '第 ' + (i + 1) + ' 部影片');
+    // 記住每支影片原始 src，切換時重新指派來強制停止播放（避免切走後還在背景出聲音）
+    const originalSrcs = iframes.map(f => f.src);
+
+    iframes.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
       dot.addEventListener('click', () => goTo(i));
       dotsWrap.appendChild(dot);
     });
-    const dots = dotsWrap.querySelectorAll('.vc-dot');
+    const dots = dotsWrap.querySelectorAll('.dot');
 
-    function pauseAllVideos(){
-      track.querySelectorAll('video').forEach(v => v.pause());
+    function stopVideo(i){
+      iframes[i].src = originalSrcs[i];
     }
 
     function update(){
-      track.style.transform = 'translateX(-' + (index * 100) + '%)';
+      iframes.forEach((f, i) => f.classList.toggle('active', i === index));
       dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      caption.textContent = String(index + 1).padStart(2,'0') + ' / ' + String(iframes.length).padStart(2,'0');
       prevBtn.disabled = index === 0;
-      nextBtn.disabled = index === slides.length - 1;
+      nextBtn.disabled = index === iframes.length - 1;
     }
 
     function goTo(i){
-      pauseAllVideos();
-      index = Math.max(0, Math.min(slides.length - 1, i));
+      const newIndex = Math.max(0, Math.min(iframes.length - 1, i));
+      if (newIndex === index) return;
+      stopVideo(index);
+      index = newIndex;
       update();
     }
 
@@ -620,30 +608,13 @@
     nextBtn.addEventListener('click', () => goTo(index + 1));
 
     // 手機滑動切換
-    const viewport = document.querySelector('.vc-viewport');
-    let touchStartX = 0;
-    let touchDeltaX = 0;
-
-    viewport.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-      touchDeltaX = 0;
-      track.style.transition = 'none';
-    }, { passive:true });
-
-    viewport.addEventListener('touchmove', (e) => {
-      touchDeltaX = e.touches[0].clientX - touchStartX;
-    }, { passive:true });
-
-    viewport.addEventListener('touchend', () => {
-      track.style.transition = '';
+    let touchStartX = 0, touchDeltaX = 0;
+    stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; touchDeltaX = 0; }, { passive:true });
+    stage.addEventListener('touchmove', e => { touchDeltaX = e.touches[0].clientX - touchStartX; }, { passive:true });
+    stage.addEventListener('touchend', () => {
       const threshold = 40;
-      if (touchDeltaX > threshold) {
-        goTo(index - 1);
-      } else if (touchDeltaX < -threshold) {
-        goTo(index + 1);
-      } else {
-        update();
-      }
+      if (touchDeltaX > threshold) goTo(index - 1);
+      else if (touchDeltaX < -threshold) goTo(index + 1);
     });
 
     update();
