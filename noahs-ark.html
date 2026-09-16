@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0b0b;
-    --bg-soft:#121212;
+    --bg:#060606;
+    --bg-soft:#0d0d0d;
     --ink:#f2f0ec;
     --ink-dim:#b9b6b0;
     --ink-faint:#7c7975;
@@ -67,7 +67,7 @@
     transition:opacity 1.2s ease-in-out;
   }
   .hero-slideshow .slide.active{
-    opacity:1;
+    opacity:5;
   }
   .hero-dots{
     position:absolute;
@@ -90,6 +90,52 @@
   .hero-dots .dot.active{
     background:#fff;
     transform:scale(1.2);
+  }
+  .hero-overlay{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.8) 100%);
+    -webkit-backdrop-filter:blur(10px) saturate(115%);
+    backdrop-filter:blur(50px) saturate(115%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 24px;
+  }
+  .hero-overlay .hero-panel{
+    padding:0;
+    pointer-events:auto;
+  }
+  .hero-overlay .hero-eyebrow{
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px;
+    letter-spacing:0.28em;
+    color:var(--ink-dim);
+    margin-bottom:14px;
+  }
+  .hero-overlay h1{
+    font-family:"Noto Serif TC", serif;
+    font-weight:600;
+    color:#fff;
+    font-size:44px;
+    letter-spacing:0.08em;
+    text-shadow:0 2px 18px rgba(0,0,0,0.5);
+  }
+  .hero-overlay .hero-sub{
+    margin-top:14px;
+    font-size:15px;
+    color:var(--ink-dim);
+    letter-spacing:0.04em;
+  }
+  @media (max-width:760px){
+    .hero-overlay h1{ font-size:30px; }
+    .hero-overlay .hero-eyebrow{ font-size:11px; letter-spacing:0.22em; }
+  }
+  @media (max-width:380px){
+    .hero-overlay h1{ font-size:24px; }
   }
 
   section{ padding:64px 0; }
@@ -160,6 +206,51 @@
     background:#3a7a4a;
   }
 
+  .body-text p{
+    font-size:15px;
+    margin-bottom:8px;
+    max-width:760px;
+  }
+  .body-text p.gap-top{ margin-top:20px; }
+  .body-text p:last-child{ margin-bottom:0; }
+
+  /* ---------- INTRO 橫幅版型（全景設計稿） ---------- */
+  .intro-visual{
+    width:100%;
+    aspect-ratio:2 / 1;
+    overflow:hidden;
+    border-radius:8px;
+    background:var(--bg-soft);
+    margin-bottom:26px;
+  }
+  .intro-visual img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .intro-full .intro-text .lead{ margin-bottom:12px; }
+  .intro-full .intro-text p{ max-width:760px; }
+ 
+  h3.section-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:19px;
+    margin-bottom:22px;
+    letter-spacing:0.12em;
+    font-weight:700;
+    color:#fff;
+  }
+  h3.section-title::before{
+    content:"";
+    display:inline-block;
+    flex-shrink:0;
+    width:4px;
+    height:22px;
+    background:#3a7a4a;
+  }
+ 
   .body-text p{
     font-size:15px;
     margin-bottom:8px;
@@ -307,21 +398,28 @@
   <!-- ===================== HERO SLIDESHOW ===================== -->
   <!-- TODO：請替換成諾亞方舟壁畫的現場照片，路徑僅為示意 -->
   <div class="hero-slideshow" id="heroSlideshow">
-    <img class="slide active" src="./img/noahsArk/photo/01.jpg" alt="諾亞方舟壁畫完成全景">
-    <img class="slide" src="./img/noahsArk/photo/02.jpg" alt="團體共同上色過程照片">
+    <img class="slide active" src="./img/noahs-ark/01 (3).jpg" alt="諾亞方舟壁畫完成全景">
+    <!-- <img class="slide" src="./img/noahsArk/photo/02.jpg" alt="團體共同上色過程照片">
     <img class="slide" src="./img/noahsArk/photo/03.jpg" alt="投影定位上色照片">
-    <img class="slide" src="./img/noahsArk/photo/04.jpg" alt="壁畫局部特寫照片">
+    <img class="slide" src="./img/noahsArk/photo/04.jpg" alt="壁畫局部特寫照片"> -->
+    <div class="hero-overlay">
+      <div class="hero-panel">
+        <div class="hero-eyebrow">MURAL PROJECT</div>
+        <h1>諾亞方舟 Noah's Ark</h1>
+        <div class="hero-sub">數字油畫壁畫創作企劃</div>
+      </div>
+    </div>
     <div class="hero-dots" id="heroDots"></div>
   </div>
 
   <div class="wrap">
 
     <!-- ===================== 作品介紹 ===================== -->
-    <section>
-      <div class="intro">
-        <div class="intro-logo">
+ <section>
+      <div class="intro-full">
+        <div class="intro-visual">
           <!-- TODO：請替換成設計稿或完成作品的主視覺圖 -->
-          <img src="./img/noahsArk/design/main-visual.jpg" alt="諾亞方舟壁畫設計稿">
+          <img src="./img/noahs-ark/01 (3).jpg" alt="諾亞方舟壁畫設計稿">
         </div>
         <div class="intro-text">
           <div class="lead">諾亞方舟 Noah's Ark｜數字油畫壁畫創作</div>
@@ -406,22 +504,22 @@
       <!-- TODO：請替換成實際拍攝的過程照片與完成照，張數可依實際數量增減 -->
       <div class="stage-grid">
         <div class="demo-image-preview">
-          <img class="thumb" src="./img/noahsArk/photo/process-01.jpg" loading="lazy" data-preview-index="0">
+          <img class="thumb" src="./img/noahs-ark/01 (3).jpg" loading="lazy" data-preview-index="0">
         </div>
         <div class="demo-image-preview">
-          <img class="thumb" src="./img/noahsArk/photo/process-02.jpg" loading="lazy" data-preview-index="1">
+          <img class="thumb" src="./img/noahs-ark/01 (5).jpg" loading="lazy" data-preview-index="1">
         </div>
         <div class="demo-image-preview">
-          <img class="thumb" src="./img/noahsArk/photo/process-03.jpg" loading="lazy" data-preview-index="2">
+          <img class="thumb" src="./img/noahs-ark/IMG_1521.JPG" loading="lazy" data-preview-index="2">
         </div>
         <div class="demo-image-preview">
-          <img class="thumb" src="./img/noahsArk/photo/process-04.jpg" loading="lazy" data-preview-index="3">
+          <img class="thumb" src="./img/noahs-ark/01 (4).jpg" loading="lazy" data-preview-index="3">
         </div>
         <div class="demo-image-preview">
-          <img class="thumb" src="./img/noahsArk/photo/process-05.jpg" loading="lazy" data-preview-index="4">
+          <img class="thumb" src="./img/noahs-ark/01 (6).jpg" loading="lazy" data-preview-index="4">
         </div>
         <div class="demo-image-preview">
-          <img class="thumb" src="./img/noahsArk/photo/final-01.jpg" loading="lazy" data-preview-index="5">
+          <img class="thumb" src="./img/noahs-ark/01 (2).jpg" loading="lazy" data-preview-index="5">
         </div>
       </div>
     </section>
