@@ -203,6 +203,9 @@
     font-size:24px;
     letter-spacing:0.03em;
     margin-bottom:24px;
+    margin-left:auto;
+    margin-right:auto;
+    max-width:1180px;
     position:relative;
     padding-left:22px;
   }
@@ -558,7 +561,7 @@
 <nav>
   <a href="index.html" class="nav-logo">禕羽</a>
   <ul class="nav-links">
-    <li><a href="index.html#works" class="back-btn">回作品列表</a></li>
+    <li><a href="index.html?cat=graphic#works" class="back-btn">回作品列表</a></li>
   </ul>
 </nav>
 
@@ -1022,6 +1025,7 @@
 </script>
 
 <!-- 共用：浮動回列表按鈕 + 結尾 CTA -->
-<script src="./shared/back-to-list.js"></script>
+<script>window.BACK_TO_LIST_URL = 'index.html?cat=graphic#works';</script>
+<script src="./shared/back to list .js"></script>
 </body>
 </html>

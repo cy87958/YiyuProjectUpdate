@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>諾亞方舟 Noah's Ark｜壁畫創作企劃</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0b;
+    --bg-soft:#121212;
+    --ink:#f2f0ec;
+    --ink-dim:#b9b6b0;
+    --ink-faint:#7c7975;
+    --rule:#2a2a2a;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Noto Sans TC","Noto Serif TC",serif;
+    line-height:1.9;
+    letter-spacing:0.02em;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+  }
+
+  .page{
+    width:100%;
+    max-width:1040px;
+  }
+
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  h2,h3{
+    font-family:"Noto Serif TC", serif;
+    font-weight:600;
+    letter-spacing:0.06em;
+  }
+
+  p{ color:var(--ink-dim); }
+
+  /* ---------- HERO SLIDESHOW ---------- */
+  .hero-slideshow{
+    position:relative;
+    width:100%;
+    height:520px;
+    overflow:hidden;
+    background:var(--bg-soft);
+  }
+  .hero-slideshow .slide{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity 1.2s ease-in-out;
+  }
+  .hero-slideshow .slide.active{
+    opacity:1;
+  }
+  .hero-dots{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:20px;
+    display:flex;
+    justify-content:center;
+    gap:9px;
+    z-index:2;
+  }
+  .hero-dots .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.35);
+    cursor:pointer;
+    transition:background 0.3s ease, transform 0.3s ease;
+  }
+  .hero-dots .dot.active{
+    background:#fff;
+    transform:scale(1.2);
+  }
+
+  section{ padding:64px 0; }
+  section + section{ border-top:1px solid var(--rule); }
+
+  /* ---------- INTRO / 主視覺 ---------- */
+  .intro{
+    display:flex;
+    align-items:center;
+    gap:60px;
+    flex-wrap:wrap;
+  }
+  .intro-logo{
+    width:100%;
+    max-width:320px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--bg-soft);
+    border:1px dashed var(--rule);
+    border-radius:8px;
+    text-align:center;
+    padding:14px;
+    aspect-ratio:4 / 5;
+    overflow:hidden;
+  }
+  .intro-logo img{
+    display:block;
+    width:100%;
+    max-width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .intro-logo .placeholder-label{
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px;
+    color:var(--ink-faint);
+    letter-spacing:0.1em;
+  }
+  .intro-text .lead{
+    font-size:16.5px;
+    color:#fff;
+    font-weight:500;
+    margin-bottom:10px;
+  }
+  .intro-text p{
+    font-size:15px;
+    max-width:560px;
+  }
+
+  h3.section-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:19px;
+    margin-bottom:22px;
+    letter-spacing:0.12em;
+    font-weight:700;
+    color:#fff;
+  }
+  h3.section-title::before{
+    content:"";
+    display:inline-block;
+    flex-shrink:0;
+    width:4px;
+    height:22px;
+    background:#3a7a4a;
+  }
+
+  .body-text p{
+    font-size:15px;
+    margin-bottom:8px;
+    max-width:760px;
+  }
+  .body-text p.gap-top{ margin-top:20px; }
+  .body-text p:last-child{ margin-bottom:0; }
+
+  /* ---------- 過程／作品照片（縮圖 + 燈箱） ---------- */
+  .stage-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+  }
+  .demo-image-preview{
+    position:relative;
+    width:100%;
+    aspect-ratio:1 / 1;
+    overflow:hidden;
+    cursor:zoom-in;
+    background:var(--bg-soft);
+  }
+  .demo-image-preview .thumb{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.4s ease, filter 0.4s ease;
+  }
+  .demo-image-preview:hover .thumb{
+    transform:scale(1.06);
+    filter:brightness(0.85);
+  }
+
+  /* ---------- 燈箱 Lightbox ---------- */
+  .img-lb{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+  }
+  .img-lb.open{ display:flex; }
+  .img-lb-stage{
+    width:88vw;
+    height:82vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .img-lb-img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    user-select:none;
+    cursor:grab;
+    transition:transform 0.08s linear;
+  }
+  .img-lb-img.dragging{ cursor:grabbing; }
+  .img-lb-close{
+    position:absolute;
+    top:22px;
+    right:28px;
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:32px;
+    line-height:1;
+    cursor:pointer;
+    z-index:2;
+  }
+  .img-lb-progress{
+    position:absolute;
+    top:26px;
+    left:28px;
+    color:var(--ink-dim);
+    font-family:"JetBrains Mono", monospace;
+    font-size:13px;
+    letter-spacing:0.08em;
+  }
+  .img-lb-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:#fff;
+    font-size:44px;
+    line-height:1;
+    cursor:pointer;
+    padding:10px 16px;
+    opacity:0.7;
+    transition:opacity 0.2s ease;
+  }
+  .img-lb-arrow:hover{ opacity:1; }
+  .img-lb-prev{ left:8px; }
+  .img-lb-next{ right:8px; }
+  .img-lb-tools{
+    position:absolute;
+    bottom:26px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:10px;
+  }
+  .img-lb-tools button{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:1px solid var(--rule);
+    background:var(--bg-soft);
+    color:#fff;
+    font-size:14px;
+    cursor:pointer;
+    transition:background 0.2s ease;
+  }
+  .img-lb-tools button:hover{ background:#1c1c1c; }
+
+  @media (max-width:760px){
+    .wrap{ padding:0 22px; }
+    .hero-slideshow{ height:300px; }
+    .intro{ gap:28px; }
+    .img-lb-arrow{ font-size:32px; padding:8px 10px; }
+  }
+
+  @media (max-width:600px){
+    .hero-slideshow{ height:240px; }
+    .stage-grid{ grid-template-columns:repeat(2,1fr); gap:10px; }
+  }
+
+  @media (max-width:380px){
+    .wrap{ padding:0 16px; }
+    .hero-slideshow{ height:200px; }
+    .intro{ gap:20px; }
+    .stage-grid{ grid-template-columns:repeat(2,1fr); gap:8px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===================== HERO SLIDESHOW ===================== -->
+  <!-- TODO：請替換成諾亞方舟壁畫的現場照片，路徑僅為示意 -->
+  <div class="hero-slideshow" id="heroSlideshow">
+    <img class="slide active" src="./img/noahsArk/photo/01.jpg" alt="諾亞方舟壁畫完成全景">
+    <img class="slide" src="./img/noahsArk/photo/02.jpg" alt="團體共同上色過程照片">
+    <img class="slide" src="./img/noahsArk/photo/03.jpg" alt="投影定位上色照片">
+    <img class="slide" src="./img/noahsArk/photo/04.jpg" alt="壁畫局部特寫照片">
+    <div class="hero-dots" id="heroDots"></div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ===================== 作品介紹 ===================== -->
+    <section>
+      <div class="intro">
+        <div class="intro-logo">
+          <!-- TODO：請替換成設計稿或完成作品的主視覺圖 -->
+          <img src="./img/noahsArk/design/main-visual.jpg" alt="諾亞方舟壁畫設計稿">
+        </div>
+        <div class="intro-text">
+          <div class="lead">諾亞方舟 Noah's Ark｜數字油畫壁畫創作</div>
+          <p>
+            以《聖經》諾亞方舟的故事為題，透過數字油畫的分色上色方式，帶領教會團體共同完成一幅大型壁畫，
+            在服侍與協作的過程中，體現團結、溝通與盼望的精神。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 故事背景 ===================== -->
+    <section>
+      <h3 class="section-title">故事背景</h3>
+      <div class="body-text">
+        <p>
+          《聖經》中的諾亞方舟是一艘具有三層結構、如箱子般的巨大船隻。上帝因世人的罪惡降下洪水，
+          唯有挪亞一家八口，以及方舟中所承載的各種生物得以倖免。
+        </p>
+        <p class="gap-top">
+          挪亞依照上帝的吩咐，將超過一年的糧食儲備於方舟之中，並帶上潔淨與不潔淨的動物：
+          不潔淨動物各一對，潔淨動物則各七對。洪水退去後，方舟停靠於亞拉拉特山一帶。
+          挪亞放出鴿子，鴿子銜回橄欖枝，象徵大地逐漸恢復生機，也代表和平與希望。
+        </p>
+        <p>
+          最後，上帝以彩虹作為立約的記號，應許不再因人的緣故以洪水毀滅大地，讓萬物得以延續、生生不息。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 創作理念與合作過程 ===================== -->
+    <section>
+      <h3 class="section-title">創作理念與合作過程</h3>
+      <div class="body-text">
+        <p>
+          這次《諾亞方舟》壁畫合作，是在一次因緣際會的機會下展開的創作。作品以數字油畫為發想，
+          將完整的設計稿分割成一塊塊不同的繪畫區域，讓即使沒有繪畫基礎的參與者，
+          也能透過辨識色彩與共同上色，投入壁畫的製作。
+        </p>
+        <p class="gap-top">
+          這件裝置藝術不僅是一次繪畫創作，更是一場以教會團體為對象的合作實踐。
+          透過共同完成一幅大型作品，考驗團體在服侍過程中的團結、溝通與協作能力，
+          也讓每一位參與者都能在創作中找到自己的位置。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 畫面設計 ===================== -->
+    <section>
+      <h3 class="section-title">畫面設計</h3>
+      <div class="body-text">
+        <p>
+          畫面以諾亞方舟的故事為核心，思考如何透過不同的視角與構圖，
+          將故事中的重要情節濃縮於一張設計稿之中，讓觀者能夠一眼理解作品所傳達的意涵。
+        </p>
+        <p class="gap-top">
+          在細節設計上，讓方舟的透視角度呈現出彷彿被海浪微微掀起的姿態，
+          使船身內部的動物能夠清楚地展現於畫面之中。挪亞則站立於方舟最前端，張開雙臂，
+          象徵在末日風雨過後，迎接上帝所賜予的恩典與盼望。
+        </p>
+        <p>
+          此外，畫面中也安排了銜著橄欖枝的白鴿，作為和平、純潔與新生的象徵，
+          呼應諾亞方舟故事中洪水退去、世界重新恢復秩序的轉折。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 製作方式 ===================== -->
+    <section>
+      <h3 class="section-title">製作方式</h3>
+      <div class="body-text">
+        <p>
+          後續製作階段，我們使用投影機將設計稿投射至壁畫的繪製表面，再依照分割後的色彩區域進行上色。
+          透過投影定位與團體分工，讓參與者能夠更精準地完成畫面，也使整件作品在共同創作的過程中逐步成形。
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== 創作過程與作品照片 ===================== -->
+    <section>
+      <h3 class="section-title">創作過程與作品照片</h3>
+      <!-- TODO：請替換成實際拍攝的過程照片與完成照，張數可依實際數量增減 -->
+      <div class="stage-grid">
+        <div class="demo-image-preview">
+          <img class="thumb" src="./img/noahsArk/photo/process-01.jpg" loading="lazy" data-preview-index="0">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="./img/noahsArk/photo/process-02.jpg" loading="lazy" data-preview-index="1">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="./img/noahsArk/photo/process-03.jpg" loading="lazy" data-preview-index="2">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="./img/noahsArk/photo/process-04.jpg" loading="lazy" data-preview-index="3">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="./img/noahsArk/photo/process-05.jpg" loading="lazy" data-preview-index="4">
+        </div>
+        <div class="demo-image-preview">
+          <img class="thumb" src="./img/noahsArk/photo/final-01.jpg" loading="lazy" data-preview-index="5">
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+<!-- ===================== 圖片燈箱 Lightbox ===================== -->
+<div class="img-lb" id="imgLb">
+  <div class="img-lb-progress" id="imgLbProgress">1 / 6</div>
+  <button class="img-lb-close" id="imgLbClose" aria-label="關閉">×</button>
+
+  <button class="img-lb-arrow img-lb-prev" id="imgLbPrev" aria-label="上一張">‹</button>
+  <div class="img-lb-stage" id="imgLbStage">
+    <img class="img-lb-img" id="imgLbImg" src="" alt="">
+  </div>
+  <button class="img-lb-arrow img-lb-next" id="imgLbNext" aria-label="下一張">›</button>
+
+  <div class="img-lb-tools">
+    <button id="imgLbZoomOut" aria-label="縮小">－</button>
+    <button id="imgLbZoomReset" aria-label="重設">1:1</button>
+    <button id="imgLbZoomIn" aria-label="放大">＋</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slideshow = document.getElementById('heroSlideshow');
+  var slides = slideshow.querySelectorAll('.slide');
+  var dotsWrap = document.getElementById('heroDots');
+  var current = 0;
+  var interval = 4000;
+  var timer;
+
+  slides.forEach(function(_, i){
+    var dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', function(){
+      goTo(i);
+      restart();
+    });
+    dotsWrap.appendChild(dot);
+  });
+  var dots = dotsWrap.querySelectorAll('.dot');
+
+  function goTo(index){
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function next(){
+    goTo((current + 1) % slides.length);
+  }
+
+  function restart(){
+    clearInterval(timer);
+    timer = setInterval(next, interval);
+  }
+
+  restart();
+})();
+</script>
+
+<script>
+(function(){
+  // 依縮圖 data-preview-index 順序，自動組出燈箱要顯示的原圖清單
+  var thumbs = Array.prototype.slice.call(document.querySelectorAll('.demo-image-preview .thumb'));
+  var srcList = thumbs
+    .slice()
+    .sort(function(a, b){
+      return parseInt(a.dataset.previewIndex, 10) - parseInt(b.dataset.previewIndex, 10);
+    })
+    .map(function(t){ return t.getAttribute('src'); });
+
+  var zoomRate = 1.2;
+  var maxScale = 7;
+  var minScale = 0.2;
+
+  var lb = document.getElementById('imgLb');
+  var lbImg = document.getElementById('imgLbImg');
+  var lbProgress = document.getElementById('imgLbProgress');
+  var stage = document.getElementById('imgLbStage');
+
+  var current = 0;
+  var scale = 1;
+  var posX = 0, posY = 0;
+  var dragging = false, startX = 0, startY = 0;
+
+  function applyTransform(){
+    lbImg.style.transform = 'translate(' + posX + 'px, ' + posY + 'px) scale(' + scale + ')';
+  }
+
+  function resetTransform(){
+    scale = 1; posX = 0; posY = 0;
+    applyTransform();
+  }
+
+  function show(index){
+    current = (index + srcList.length) % srcList.length;
+    lbImg.src = srcList[current];
+    lbProgress.textContent = (current + 1) + ' / ' + srcList.length;
+    resetTransform();
+  }
+
+  function open(index){
+    show(index);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close(){
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function zoom(factor){
+    scale = Math.min(maxScale, Math.max(minScale, scale * factor));
+    applyTransform();
+  }
+
+  thumbs.forEach(function(thumb, i){
+    thumb.addEventListener('click', function(){
+      var initial = thumb.dataset.previewIndex ? parseInt(thumb.dataset.previewIndex, 10) : i;
+      open(initial);
+    });
+  });
+
+  document.getElementById('imgLbClose').addEventListener('click', close);
+  document.getElementById('imgLbPrev').addEventListener('click', function(){ show(current - 1); });
+  document.getElementById('imgLbNext').addEventListener('click', function(){ show(current + 1); });
+  document.getElementById('imgLbZoomIn').addEventListener('click', function(){ zoom(zoomRate); });
+  document.getElementById('imgLbZoomOut').addEventListener('click', function(){ zoom(1 / zoomRate); });
+  document.getElementById('imgLbZoomReset').addEventListener('click', resetTransform);
+
+  lb.addEventListener('click', function(e){ if (e.target === lb) close(); });
+
+  stage.addEventListener('wheel', function(e){
+    e.preventDefault();
+    zoom(e.deltaY < 0 ? zoomRate : 1 / zoomRate);
+  }, { passive: false });
+
+  lbImg.addEventListener('mousedown', function(e){
+    dragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+    lbImg.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', function(e){
+    if (!dragging) return;
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+    applyTransform();
+  });
+  window.addEventListener('mouseup', function(){
+    dragging = false;
+    lbImg.classList.remove('dragging');
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+    if (e.key === '+') zoom(zoomRate);
+    if (e.key === '-') zoom(1 / zoomRate);
+  });
+})();
+</script>
+
+</body>
+</html>

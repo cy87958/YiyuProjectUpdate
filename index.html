@@ -824,7 +824,7 @@
         { title: '方舟街頭藝術-牆壁壁畫', 
         desc: '', 
         tags: ['photoshop', 'illustration'],
-        link: '' },
+        link: './noahs-ark.html' },
 
         { title: 'Apple電腦殼設計', 
         desc: '', 
@@ -858,6 +858,7 @@
 
   function openLightbox(category) {
     const data = GALLERY_DATA[category];
+    if (!data) return;
     lbTitle.textContent = data.title;
     lbScroll.innerHTML = '';
 
@@ -931,6 +932,19 @@
   document.querySelectorAll('.cat-card').forEach(card => {
     card.addEventListener('click', () => openLightbox(card.dataset.category));
   });
+
+  // 從其他分頁按「回作品列表」導回來時，依網址參數 ?cat=xxx 自動開啟對應分類的燈箱
+  // 例如：index.html?cat=graphic#works 會自動打開「平面設計」的專案清單
+  (function(){
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('cat');
+    if (cat && GALLERY_DATA[cat]) {
+      window.addEventListener('load', () => {
+        // 稍微延遲，確保頁面版面、字型都穩定後再開啟，避免畫面跳動
+        setTimeout(() => openLightbox(cat), 300);
+      });
+    }
+  })();
 
   // 關閉手機上的自訂游標，避免遮擋網頁內容
   const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches;
