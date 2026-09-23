@@ -184,6 +184,21 @@
     color: var(--accent);
     background: var(--accent-dim);
   }
+  .stw {
+    display: inline-flex;
+    border: 1px dashed rgba(200,184,154,0.5);
+    background-image: linear-gradient(90deg, var(--accent), var(--accent2));
+    background-size: 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    min-height: 30px;
+    padding: 0.35rem 0.8rem;
+    border-radius: 8px;
+    margin: 0.2rem;
+    align-items: center;
+  }
   .hero-scroll {
     position: absolute;
     right: 3rem; bottom: 5rem;
@@ -234,11 +249,10 @@
 
   /* About */
   #about { background: var(--bg2); }
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
+  .about-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
   }
   .about-text {
     font-family: 'Noto Serif TC', serif;
@@ -246,38 +260,73 @@
     font-weight: 300;
     color: var(--text2);
     line-height: 2.2;
+    max-width: 720px;
   }
   .about-text p + p { margin-top: 1.5rem; }
   .about-highlight {
     color: var(--accent2);
   }
-  .skills-list {
-    display: flex; flex-direction: column; gap: 1.5rem;
-    margin-top: 1rem;
+
+  /* Skills — descriptive cards with tags */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
   }
-  .skill-item {
-    display: flex; flex-direction: column; gap: 0.4rem;
+  .skill-card {
+    background: var(--bg2);
+    padding: 1.75rem;
   }
-  .skill-name {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text2);
+  .skill-card-head {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
   }
-  .skill-bar-bg {
-    height: 1px;
-    background: var(--border);
+  .skill-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.2;
   }
-  .skill-bar {
-    height: 1px;
-    background: var(--accent);
-    transform-origin: left;
-    animation: barGrow 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    transform: scaleX(0);
+  .skill-card-years {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
   }
-  @keyframes barGrow { to { transform: scaleX(1); } }
+  .skill-card-desc {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.8rem;
+    color: var(--text2);
+    line-height: 1.9;
+    margin-bottom: 1rem;
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .skill-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    transition: all 0.3s;
+  }
+  .skill-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
 
   /* Works — Category Cards */
   #works { background: var(--bg); }
@@ -503,8 +552,9 @@
     nav { padding: 1.25rem 1.5rem; }
     .hero { padding: 0 1.5rem 4rem; }
     section { padding: 5rem 1.5rem; }
-    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
     .cat-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
     .lb-masonry { columns: 2; }
     footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
     .nav-links { gap: 1.5rem; }
@@ -547,9 +597,7 @@
     <h1 class="hero-name">禕<em>羽</em></h1>
     <p class="hero-desc">將故事轉化為畫面，<br>在資訊與設計之間找到平衡的美學。</p>
     <div class="hero-tags">
-      <span class="hero-tag">網頁前端</span>
-      <span class="hero-tag">攝影</span>
-      <span class="hero-tag">平面設計</span>
+      <h2 id="hero-split-text" style="font-family:'DM Mono',monospace;font-weight:300;font-size:0.7rem;letter-spacing:0.1em;opacity:0;margin:0;text-align:left;line-height:2.4;">平面設計 繪畫 攝影 網頁前端 網頁設計丙級技術士 插畫PC乙級證照 Photoshop影像處理認證 SCA義式咖啡中級</h2>
     </div>
   </div>
   <div class="hero-scroll">
@@ -562,34 +610,65 @@
 <section id="about">
   <div class="section-label" data-num="01">About</div>
   <h2 class="section-title fade-up">關於<br><em style="font-style:italic; color:var(--accent)">我</em></h2>
-  <div class="about-grid">
+
+  <div class="about-stack">
     <div class="about-text fade-up">
-      <p>嗨，我是<span class="about-highlight">禕羽</span>
-擁有兩年平面設計與網頁設計經驗，以及兩年婚紗與活動攝影經驗。在職涯中嘗試了不同的專業領域：從婚紗攝影開始，學會理解客戶需求、掌握溝通節奏，並累積攝影打光與修圖的實務能力；
-<p>後續承接活動主視覺設計與印刷製作，包括背板、旗幟、X展架、攝影牆等多元形式的輸出物。熟悉 Adobe 系列軟體，包括 Illustrator、Photoshop、Capture One、Premiere Pro。
-</p>
+      <p>嗨，我是<span class="about-highlight">禕羽</span>，
+擁有兩年平面設計與網頁設計經驗，以及兩年婚紗與活動攝影經驗。在職涯中嘗試了不同的專業領域：從婚紗攝影開始，學會理解客戶需求、掌握溝通節奏，並累積攝影打光與修圖的實務能力；</p>
 
-<p>在將設計圖樣放上網頁的過程中，我意識到網頁上的元素不只是靜態圖像，於是進一步鑽研前端開發，具備 HTML、CSS、JavaScript 基礎，並理解 MVC、MVVM 架構概念，實際使用 Vue 前端框架搭配 Element Plus 開發介面。</p>
+      <p>後續承接活動主視覺設計與印刷製作，包括背板、旗幟、X展架、攝影牆等多元形式的輸出物。熟悉 Adobe 系列軟體，包括 Illustrator、Photoshop、Capture One、Premiere Pro。</p>
 
-<p>除了技能上的累積，一路走來也養成了一些做事的習慣：深思熟慮、仔細評估，對細節保有高度敏銳度；同時樂於挑戰既有做法，喜歡嘗試新方法來優化流程與成果，情緒穩定，也擅長與客戶及團隊維持良好的合作關係。我把工作視為生活的一部分，持續學習、持續累積，也期望能將所學回饋給更多人。</p>
+      <p>在將設計圖樣放上網頁的過程中，我意識到網頁上的元素不只是靜態圖像，於是進一步鑽研前端開發，具備 HTML、CSS、JavaScript 基礎，並理解 MVC、MVVM 架構概念，實際使用 Vue 前端框架搭配 Element Plus 開發介面。</p>
+
+      <p>除了技能上的累積，一路走來也養成了一些做事的習慣：深思熟慮、仔細評估，對細節保有高度敏銳度；同時樂於挑戰既有做法，喜歡嘗試新方法來優化流程與成果，情緒穩定，也擅長與客戶及團隊維持良好的合作關係。我把工作視為生活的一部分，持續學習、持續累積，也期望能將所學回饋給更多人。</p>
     </div>
-    <div class="fade-up" style="animation-delay: 0.2s">
-      <div class="skills-list">
-        <div class="skill-item">
-          <div class="skill-name"><span>前端開發</span><span>HTML / CSS / JS</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar" style="width:60%"></div></div>
+
+    <div class="skills-grid fade-up" style="animation-delay: 0.2s">
+      <div class="skill-card">
+        <div class="skill-card-head">
+          <div class="skill-card-title">平面攝影<br>動態攝影</div>
+          <div class="skill-card-years">兩年經驗</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-name"><span>UI 設計</span><span>Figma / Prototyping</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar" style="width:65%; animation-delay: 0.2s"></div></div>
+        <p class="skill-card-desc">涵蓋活動與婚紗現場拍攝、活動紀錄影片調色，以及後期照片精修。</p>
+        <div class="skill-tags">
+          <span class="skill-tag">婚紗攝影</span>
+          <span class="skill-tag">活動紀錄</span>
         </div>
-        <div class="skill-item">
-          <div class="skill-name"><span>平面設計</span><span>Typography / Layout</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar" style="width:90%; animation-delay: 0.4s"></div></div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-head">
+          <div class="skill-card-title">平面設計</div>
+          <div class="skill-card-years">兩年經驗</div>
         </div>
-        <div class="skill-item">
-          <div class="skill-name"><span>攝影</span><span>Portrait / Street</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar" style="width:90%; animation-delay: 0.6s"></div></div>
+        <p class="skill-card-desc">負責活動主視覺設計與印刷製作，包括背板、旗幟、X展架等多元輸出物。</p>
+        <div class="skill-tags">
+          <span class="skill-tag">主視覺設計</span>
+          <span class="skill-tag">印刷輸出</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-head">
+          <div class="skill-card-title">UI / 網頁設計</div>
+          <div class="skill-card-years">兩年經驗</div>
+        </div>
+        <p class="skill-card-desc">使用 Figma 進行介面設計與原型製作，並實作版面規劃。</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Prototyping</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-head">
+          <div class="skill-card-title">前端開發</div>
+          <div class="skill-card-years">自學中</div>
+        </div>
+        <p class="skill-card-desc">具備 HTML、CSS、JavaScript 基礎，熟悉 Vue 框架搭配 Element Plus 開發介面。</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Vue.js</span>
+          <span class="skill-tag">Element Plus</span>
         </div>
       </div>
     </div>
@@ -959,6 +1038,36 @@ if (isTouchDevice) {
   document.body.style.cursor = 'auto';
 }
 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script>
+(function(){
+  if (typeof gsap === 'undefined' || typeof SplitText === 'undefined') {
+    console.warn('GSAP/SplitText failed to load — showing static text instead.');
+    var fallback = document.getElementById('hero-split-text');
+    if (fallback) fallback.style.opacity = 1;
+    return;
+  }
+  gsap.registerPlugin(SplitText);
+  document.fonts.ready.then(function(){
+    var el = document.getElementById('hero-split-text');
+    if (!el) return;
+    gsap.set(el, { opacity: 1 });
+    var split = SplitText.create(el, {
+      type: 'words',
+      wordsClass: 'stw++'
+    });
+    gsap.from(split.words, {
+      y: -60,
+      opacity: 0,
+      rotation: 'random(-60,60)',
+      stagger: 0.06,
+      duration: 1,
+      ease: 'back'
+    });
+  });
+})();
 </script>
 </body>
 </html>
